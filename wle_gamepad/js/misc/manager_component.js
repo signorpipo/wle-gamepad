@@ -10,6 +10,9 @@ WL.registerComponent('manager', {
     update: function (dt) {
         leftGamepad.update(dt);
         rightGamepad.update(dt);
+
+        let axes = rightGamepad.getAxesInfo().myAxes;
+        console.log(axes[0].toFixed(3), ",", axes[1].toFixed(3));
     },
 });
 

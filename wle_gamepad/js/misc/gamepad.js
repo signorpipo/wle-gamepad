@@ -1,5 +1,11 @@
 //If you don't want the PP "namespace" just search and replace PP. with empty string
 
+PP.Handedness =
+{
+    LEFT: "left",
+    RIGHT: "right"
+};
+
 PP.ButtonType = {
     SELECT: 0,  //Trigger
     SQUEEZE: 1, //Grip
@@ -7,7 +13,6 @@ PP.ButtonType = {
     BOTTOM_BUTTON: 4, // A or X button on oculus quest controller, also triggered for "touchpad" press on other controllers
     TOP_BUTTON: 5  // B or Y button
 };
-
 
 PP.ButtonEvent = {
     PRESSED_START: 0,
@@ -20,12 +25,6 @@ PP.ButtonEvent = {
     NOT_TOUCHED: 7, //Every frame that it is not touched
     VALUE_CHANGED: 8,
     ALWAYS: 9, //callback every frame for this button
-};
-
-PP.Handedness =
-{
-    LEFT: "left",
-    RIGHT: "right"
 };
 
 PP.ButtonInfo = class ButtonInfo {
@@ -41,6 +40,25 @@ PP.ButtonInfo = class ButtonInfo {
     }
 };
 
+PP.AxesEvent = {
+    X_CHANGED: 0,
+    Y_CHANGED: 1,
+    AXES_CHANGED: 2,
+    ALWAYS: 3
+};
+
+//index 0 is x, index 1 is y
+PP.AxesInfo = class AxesInfo {
+    constructor() {
+        this.myAxes = new Float32Array(2);
+        this.myAxes.fill(0.0);
+
+        this.myPrevAxes = new Float32Array(2);
+        this.myPrevAxes.fill(0.0);
+    }
+};
+
+//xr-standard mapping is assumed for gamepad
 PP.Gamepad = class Gamepad {
     constructor(handedness) {
         this.myHandedness = handedness;
@@ -50,6 +68,8 @@ PP.Gamepad = class Gamepad {
             this.myButtonInfos[PP.ButtonType[key]] = new PP.ButtonInfo();
         }
 
+        this.myAxesInfo = new PP.AxesInfo();
+
         this._mySelectStart = false;
         this._mySelectEnd = false;
         this._mySqueezeStart = false;
@@ -58,12 +78,17 @@ PP.Gamepad = class Gamepad {
         this.mySession = null;
         this.myGamepad = null;
 
-        this.myCallbacks = [];
+        this._myButtonCallbacks = [];
         for (let typeKey in PP.ButtonType) {
-            this.myCallbacks[PP.ButtonType[typeKey]] = [];
+            this._myButtonCallbacks[PP.ButtonType[typeKey]] = [];
             for (let eventKey in PP.ButtonEvent) {
-                this.myCallbacks[PP.ButtonType[typeKey]][PP.ButtonEvent[eventKey]] = new Map(); //keys = object, item = callback
+                this._myButtonCallbacks[PP.ButtonType[typeKey]][PP.ButtonEvent[eventKey]] = new Map(); //keys = object, item = callback
             }
+        }
+
+        this._myAxesCallbacks = [];
+        for (let eventKey in PP.AxesEvent) {
+            this._myAxesCallbacks[PP.AxesEvent[eventKey]] = new Map(); //keys = object, item = callback
         }
     }
 
@@ -73,20 +98,24 @@ PP.Gamepad = class Gamepad {
 
     //Callback parameters are (ButtonInfo, Gamepad)
     registerButtonEvent(buttonType, buttonEvent, id, callback) {
-        this.myCallbacks[buttonType][buttonEvent].set(id, callback);
+        this._myButtonCallbacks[buttonType][buttonEvent].set(id, callback);
     }
 
-    unRegisterButtonEvent(buttonType, buttonEvent, id) {
-        this.myCallbacks[buttonType][buttonEvent].delete(id);
+    unregisterButtonEvent(buttonType, buttonEvent, id) {
+        this._myButtonCallbacks[buttonType][buttonEvent].delete(id);
     }
 
-    //For the lazy like me
-    unregisterAllButtonEvents(id) {
-        for (let typeKey in PP.ButtonType) {
-            for (let eventKey in PP.ButtonEvent) {
-                this.myCallbacks[PP.ButtonType[typeKey]][PP.ButtonEvent[eventKey]].delete(id);
-            }
-        }
+    getAxesInfo() {
+        return this.myAxesInfo;
+    }
+
+    //Callback parameters are (AxesInfo, Gamepad)
+    registerAxesEvent(axesEvent, id, callback) {
+        this._myAxesCallbacks[axesEvent].set(id, callback);
+    }
+
+    unregisterAxesEvent(axesEvent, id) {
+        this._myAxesCallbacks[axesEvent].delete(id);
     }
 
     isGamepadActive() {
@@ -107,6 +136,9 @@ PP.Gamepad = class Gamepad {
         this._updateButtonInfos();
         this._postUpdateButtonInfos();
 
+        this._preUpdateAxesInfos();
+        this._updateAxesInfos();
+        this._postUpdateAxesInfos();
     }
 
     _preUpdateButtonInfos() {
@@ -162,7 +194,7 @@ PP.Gamepad = class Gamepad {
     _postUpdateButtonInfos() {
         for (let typeKey in PP.ButtonType) {
             let buttonInfo = this.myButtonInfos[PP.ButtonType[typeKey]];
-            let buttonCallbacks = this.myCallbacks[PP.ButtonType[typeKey]];
+            let buttonCallbacks = this._myButtonCallbacks[PP.ButtonType[typeKey]];
 
             //PRESSED
             if (buttonInfo.myPressed && !buttonInfo.myPrevPressed) {
@@ -219,6 +251,38 @@ PP.Gamepad = class Gamepad {
         this._mySqueezeEnd = false;
     }
 
+    _preUpdateAxesInfos() {
+        this.myAxesInfo.myPrevAxes = this.myAxesInfo.myAxes;
+    }
+
+    _updateAxesInfos() {
+        this.myAxesInfo.myAxes = this._getInternalAxes();
+    }
+
+    _postUpdateAxesInfos() {
+        //X CHANGED
+        if (this.myAxesInfo.myAxes[0] != this.myAxesInfo.myPrevAxes[0]) {
+            let callbacksMap = this._myAxesCallbacks[PP.AxesEvent.X_CHANGED];
+            this._triggerCallbacks(callbacksMap, this.myAxesInfo);
+        }
+
+        //Y CHANGED
+        if (this.myAxesInfo.myAxes[1] != this.myAxesInfo.myPrevAxes[1]) {
+            let callbacksMap = this._myAxesCallbacks[PP.AxesEvent.Y_CHANGED];
+            this._triggerCallbacks(callbacksMap, this.myAxesInfo);
+        }
+
+        //BOTH CHANGED
+        if (glMatrix.vec2.exactEquals(this.myAxesInfo.myAxes, this.myAxesInfo.myPrevAxes)) {
+            let callbacksMap = this._myAxesCallbacks[PP.AxesEvent.AXES_CHANGED];
+            this._triggerCallbacks(callbacksMap, this.myAxesInfo);
+        }
+
+        //ALWAYS        
+        let callbacksMap = this._myAxesCallbacks[PP.AxesEvent.ALWAYS];
+        this._triggerCallbacks(callbacksMap, this.myAxesInfo);
+    }
+
     _getInternalButton(buttonType) {
         let buttonData = { pressed: false, touched: false, value: 0 };
         if (this.isGamepadActive()) {
@@ -237,6 +301,40 @@ PP.Gamepad = class Gamepad {
         }
 
         return buttonData;
+    }
+
+    _getInternalAxes() {
+        let axes = [0.0, 0.0];
+        if (this.isGamepadActive()) {
+            let internalAxes = this.myGamepad.axes;
+            if (internalAxes.length == 4) {
+                //in this case it could be both touch axes or thumbstick axes, that depends on the controller
+                //to support both I simply choose the absolute max value (unused axes will always be 0)
+
+                //X
+                if (Math.abs(internalAxes[0]) > Math.abs(internalAxes[2])) {
+                    axes[0] = internalAxes[0];
+                } else {
+                    axes[0] = internalAxes[2];
+                }
+
+                //Y
+                if (Math.abs(internalAxes[1]) > Math.abs(internalAxes[3])) {
+                    axes[1] = internalAxes[1];
+                } else {
+                    axes[1] = internalAxes[3];
+                }
+
+            } else if (internalAxes.length == 2) {
+                axes[0] = internalAxes[0];
+                axes[1] = internalAxes[1];
+            }
+        }
+
+        //y axis is recorder negative when thumbstick is pressed forward for weird reasons
+        axes[1] = -axes[1];
+
+        return axes;
     }
 
     _setupVREvents(s) {
@@ -297,9 +395,9 @@ PP.Gamepad = class Gamepad {
         }
     }
 
-    _triggerCallbacks(callbacksMap, buttonInfo) {
+    _triggerCallbacks(callbacksMap, info) {
         for (let value of callbacksMap.values()) {
-            value(buttonInfo, this);
+            value(info, this);
         }
     }
 };

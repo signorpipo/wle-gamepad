@@ -5,7 +5,9 @@ WL.registerComponent('right_gamepad', {
     bottomButton: { type: WL.Type.Object, default: null },
     topButton: { type: WL.Type.Object, default: null },
     squeezeValue: { type: WL.Type.Object, default: null },
-    selectValue: { type: WL.Type.Object, default: null }
+    selectValue: { type: WL.Type.Object, default: null },
+    xValue: { type: WL.Type.Object, default: null },
+    yValue: { type: WL.Type.Object, default: null },
 }, {
     init: function () {
         this.selectMaterial = this.select.getComponent("mesh").material.clone();
@@ -40,6 +42,8 @@ WL.registerComponent('right_gamepad', {
 
         this.squeezeValueText = this.squeezeValue.getComponent("text");
         this.selectValueText = this.selectValue.getComponent("text");
+        this.xValueText = this.xValue.getComponent("text");
+        this.yValueText = this.yValue.getComponent("text");
 
         //PRESSED
         rightGamepad.registerButtonEvent(PP.ButtonType.SELECT, PP.ButtonEvent.PRESSED_START, this, this.selectPressedStart.bind(this));
@@ -76,6 +80,10 @@ WL.registerComponent('right_gamepad', {
         //VALUE CHANGED
         rightGamepad.registerButtonEvent(PP.ButtonType.SQUEEZE, PP.ButtonEvent.VALUE_CHANGED, this, this.squeezeValueChanged.bind(this));
         rightGamepad.registerButtonEvent(PP.ButtonType.SELECT, PP.ButtonEvent.VALUE_CHANGED, this, this.selectValueChanged.bind(this));
+
+        //AXES CHANGED
+        rightGamepad.registerAxesEvent(PP.AxesEvent.X_CHANGED, this, this.xValueChanged.bind(this));
+        rightGamepad.registerAxesEvent(PP.AxesEvent.Y_CHANGED, this, this.yValueChanged.bind(this));
     },
     start: function () {
     },
@@ -163,5 +171,27 @@ WL.registerComponent('right_gamepad', {
     },
     selectValueChanged: function (buttonInfo, gamepad) {
         this.selectValueText.text = buttonInfo.myValue.toFixed(3);
+    },
+    xValueChanged: function (axesInfo, gamepad) {
+        let text = "0.000";
+        if (axesInfo.myAxes[0] >= 0.0) {
+            text = " ";
+            text = text.concat(axesInfo.myAxes[0].toFixed(3));
+        } else {
+            text = axesInfo.myAxes[0].toFixed(3);
+        }
+
+        this.xValueText.text = text;
+    },
+    yValueChanged: function (axesInfo, gamepad) {
+        let text = "0.000";
+        if (axesInfo.myAxes[1] >= 0.0) {
+            text = " ";
+            text = text.concat(axesInfo.myAxes[1].toFixed(3));
+        } else {
+            text = axesInfo.myAxes[1].toFixed(3);
+        }
+
+        this.yValueText.text = text;
     }
 });
