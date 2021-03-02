@@ -27,7 +27,8 @@
                 1.800013542175293,
                 1.7569212913513184,
                 1.0
-            ]
+            ],
+            "parent": "32"
         },
         "15": {
             "name": "FloorPlane",
@@ -55,9 +56,11 @@
                 0.0,
                 0.0,
                 0.0,
-                1.192092895507813e-7,
+                1.1920928955078126e-7,
                 1.0
-            ]
+            ],
+            "parent": "32",
+            "deleted": true
         },
         "16": {
             "name": "Cube",
@@ -83,11 +86,13 @@
                 0.0,
                 0.5,
                 0.0,
-                2.9802322387695329e-8,
+                2.9802322387695315e-8,
                 0.4999999403953552,
-                5.960464477539065e-8,
+                5.960464477539063e-8,
                 1.0
-            ]
+            ],
+            "parent": "32",
+            "deleted": true
         },
         "17": {
             "name": "NonVrCamera",
@@ -142,7 +147,7 @@
                 }
             ],
             "transformation": [
-                1.0,
+                1.0000001192092896,
                 0.0,
                 0.0,
                 0.0,
@@ -154,11 +159,12 @@
                 0.0,
                 1.0,
                 0.0,
-                4.656612873077393e-10,
+                -2.221985101699829,
                 3.0,
-                2.0,
+                2.680882215499878,
                 1.0
-            ]
+            ],
+            "parent": "32"
         },
         "23": {
             "name": "Light.000",
@@ -183,11 +189,12 @@
                 0.0,
                 1.0,
                 0.0,
-                -1.0,
-                3.0,
-                -1.0,
+                -2.6728572845458986,
+                2.994642734527588,
+                -0.9925169944763184,
                 1.0
-            ]
+            ],
+            "parent": "32"
         },
         "24": {
             "name": "Cone",
@@ -217,7 +224,9 @@
                 1.0,
                 -1.4901161193847657e-8,
                 1.0
-            ]
+            ],
+            "parent": "32",
+            "deleted": true
         },
         "27": {
             "name": "Sphere",
@@ -246,6 +255,433 @@
                 0.4999999701976776,
                 0.75,
                 -1.25,
+                1.0
+            ],
+            "parent": "32",
+            "deleted": true
+        },
+        "32": {
+            "name": "Scene",
+            "components": [
+                {
+                    "type": "manager"
+                }
+            ]
+        },
+        "53": {
+            "link": {
+                "name": "LeftQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "parent": "14",
+            "transformation": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                -0.36389589309692385,
+                -0.365597128868103,
+                -0.0666048526763916,
+                1.0
+            ],
+            "components": [
+                {
+                    "type": "input",
+                    "input": {
+                        "type": "hand left"
+                    }
+                }
+            ]
+        },
+        "54": {
+            "link": {
+                "name": "Bottom_Button<LeftQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "name": "Bottom_Button"
+        },
+        "55": {
+            "link": {
+                "name": "ControllerMain<LeftQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "transformation": [
+                -0.01000000536441803,
+                3.874303544648683e-9,
+                5.122274160385132e-9,
+                0.0,
+                -6.51925802230835e-9,
+                -0.005109274759888649,
+                -0.008596246130764485,
+                0.0,
+                -1.3969838619232178e-9,
+                -0.00859624333679676,
+                0.0051092728972435,
+                0.0,
+                -1.1920928955078126e-7,
+                4.76837158203125e-7,
+                -0.030504226684570314,
+                1.0
+            ]
+        },
+        "56": {
+            "link": {
+                "name": "GripTrigger<LeftQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "name": "Squeeze"
+        },
+        "57": {
+            "link": {
+                "name": "Option_Button<LeftQuestController",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "58": {
+            "link": {
+                "name": "Thumbstick<LeftQuestController",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "59": {
+            "link": {
+                "name": "Top_Button<LeftQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "name": "Top_Button"
+        },
+        "60": {
+            "link": {
+                "name": "Trigger<LeftQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "name": "Select"
+        },
+        "61": {
+            "link": {
+                "name": "RightQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "parent": "14",
+            "components": [
+                {
+                    "type": "input",
+                    "input": {
+                        "type": "hand right"
+                    }
+                },
+                {
+                    "type": "right_gamepad",
+                    "right_gamepad": {
+                        "select": "68",
+                        "squeeze": "64",
+                        "thumbstick": "66",
+                        "bottom_button": "62",
+                        "top_button": "67",
+                        "bottomButton": "62",
+                        "topButton": "67",
+                        "squeezeValue": "70",
+                        "selectValue": "75"
+                    }
+                }
+            ],
+            "transformation": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0952308177947998,
+                -0.3161966800689697,
+                -0.05122828483581543,
+                1.0
+            ]
+        },
+        "62": {
+            "link": {
+                "name": "Bottom_Button.001<RightQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "transformation": [
+                -0.010000031441450119,
+                4.470363634823116e-9,
+                6.053613610390585e-9,
+                0.0,
+                -7.487860997912322e-9,
+                -0.005109284073114395,
+                -0.008596268482506276,
+                0.0,
+                -7.498780485448719e-10,
+                -0.008596251718699932,
+                0.005109273828566074,
+                0.0,
+                -1.1920964482214914e-7,
+                0.0,
+                -0.030504077672958375,
+                1.0
+            ],
+            "name": "Bottom_Button"
+        },
+        "63": {
+            "link": {
+                "name": "ControllerMain.001<RightQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "transformation": [
+                -0.010000011883676052,
+                3.27825877555199e-9,
+                8.381903171539307e-9,
+                0.0,
+                -8.381903171539307e-9,
+                -0.0046901763416826729,
+                -0.00883190706372261,
+                0.0,
+                0.0,
+                -0.008831899613142014,
+                0.004690172150731087,
+                0.0,
+                0.0000019073486328125,
+                7.152557373046875e-7,
+                -0.030504941940307618,
+                1.0
+            ],
+            "name": "ControllerMain"
+        },
+        "64": {
+            "link": {
+                "name": "GripTrigger.001<RightQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "name": "Squeeze"
+        },
+        "65": {
+            "link": {
+                "name": "Option_Button.001<RightQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "name": "Option_Button"
+        },
+        "66": {
+            "link": {
+                "name": "Thumbstick.001<RightQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "transformation": [
+                -0.010000007227063179,
+                4.47035075623603e-9,
+                6.05359673500061e-9,
+                0.0,
+                -6.51925802230835e-9,
+                -0.005109275691211224,
+                -0.008596247993409634,
+                0.0,
+                -1.862645149230957e-9,
+                -0.008596244268119336,
+                0.0051092728972435,
+                0.0,
+                4.76837158203125e-7,
+                0.0000054836273193359379,
+                -0.030503511428833009,
+                1.0
+            ],
+            "name": "Thumbstick"
+        },
+        "67": {
+            "link": {
+                "name": "Top_Button.001<RightQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "name": "Top_Button"
+        },
+        "68": {
+            "link": {
+                "name": "Trigger.001<RightQuestController",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "name": "Select"
+        },
+        "69": {
+            "name": "Mesh",
+            "parent": "72",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "8",
+                        "material": "71"
+                    }
+                }
+            ],
+            "transformation": [
+                0.03999999910593033,
+                0.0,
+                5.587935447692871e-9,
+                0.0,
+                0.0,
+                0.0005000000237487257,
+                0.0,
+                0.0,
+                -6.984919587171845e-11,
+                0.0,
+                0.0005000000237487257,
+                0.0,
+                -0.052376508712768558,
+                1.1920928955078126e-7,
+                0.005294084548950195,
+                1.0
+            ]
+        },
+        "70": {
+            "name": "Squeeze_Value",
+            "parent": "72",
+            "components": [
+                {
+                    "type": "text",
+                    "text": {
+                        "text": "0.000",
+                        "justification": "middle",
+                        "alignment": "left"
+                    }
+                }
+            ],
+            "transformation": [
+                0.10000000894069672,
+                3.337859766361362e-7,
+                2.384185791015625e-7,
+                0.0,
+                2.384185791015625e-7,
+                -1.9073411294812105e-7,
+                -0.09999962151050568,
+                0.0,
+                -3.390112510714971e-7,
+                0.09999999403953552,
+                -1.89758708302179e-7,
+                0.0,
+                -0.09319615364074707,
+                -0.0000035762786865234377,
+                -0.0036270618438720705,
+                1.0
+            ]
+        },
+        "72": {
+            "name": "Empty",
+            "parent": "61",
+            "transformation": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                -0.006657004356384277,
+                -2.384185791015625e-7,
+                1.0
+            ]
+        },
+        "73": {
+            "name": "Empty.000",
+            "parent": "61",
+            "transformation": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0016483068466186524,
+                -0.0014592409133911133,
+                -0.0000050067901611328129,
+                1.0
+            ]
+        },
+        "74": {
+            "name": "Mesh",
+            "parent": "73",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "8",
+                        "material": "71"
+                    }
+                }
+            ],
+            "transformation": [
+                0.03999999910593033,
+                0.0,
+                7.450580596923828e-9,
+                0.0,
+                0.0,
+                0.0005000000237487257,
+                0.0,
+                0.0,
+                -9.313225884932663e-11,
+                0.0,
+                0.0005000000237487257,
+                0.0,
+                0.0729999989271164,
+                -0.03200000151991844,
+                -0.03391147032380104,
+                1.0
+            ]
+        },
+        "75": {
+            "name": "Select_Value",
+            "parent": "73",
+            "components": [
+                {
+                    "type": "text",
+                    "text": {
+                        "text": "0.000",
+                        "justification": "middle",
+                        "alignment": "left"
+                    }
+                }
+            ],
+            "transformation": [
+                0.10000000894069672,
+                3.367662486652989e-7,
+                2.4586915969848635e-7,
+                0.0,
+                2.4586915969848635e-7,
+                -1.81793538445163e-7,
+                -0.09999965876340866,
+                0.0,
+                -3.391181735423743e-7,
+                0.09999999403953552,
+                -1.8133005141862669e-7,
+                0.0,
+                0.0818864107131958,
+                -0.029276609420776368,
+                -0.04119110107421875,
                 1.0
             ]
         }
@@ -286,6 +722,90 @@
                 "name": "PrimitiveCircle",
                 "file": "default"
             }
+        },
+        "39": {
+            "link": {
+                "name": "Mesh.002",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "40": {
+            "link": {
+                "name": "Mesh",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "41": {
+            "link": {
+                "name": "Mesh.006",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "42": {
+            "link": {
+                "name": "Mesh.003",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "43": {
+            "link": {
+                "name": "Mesh.004",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "44": {
+            "link": {
+                "name": "Mesh.001",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "45": {
+            "link": {
+                "name": "Mesh.005",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "46": {
+            "link": {
+                "name": "Mesh.009",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "47": {
+            "link": {
+                "name": "Mesh.007",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "48": {
+            "link": {
+                "name": "Mesh.013",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "49": {
+            "link": {
+                "name": "Mesh.010",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "50": {
+            "link": {
+                "name": "Mesh.011",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "51": {
+            "link": {
+                "name": "Mesh.008",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "52": {
+            "link": {
+                "name": "Mesh.012",
+                "file": "assets\\quest_controllers.glb"
+            }
         }
     },
     "textures": {
@@ -303,6 +823,21 @@
             "link": {
                 "name": "DefaultFontMaterial",
                 "file": "default"
+            },
+            "DistanceFieldVector": {
+                "vectorTexture": "t0",
+                "outlineColor": [
+                    0.1764705777168274,
+                    0.17646880447864533,
+                    0.17646880447864533,
+                    1.0
+                ],
+                "color": [
+                    0.9137254953384399,
+                    0.9137163162231445,
+                    0.9137163162231445,
+                    1.0
+                ]
             }
         },
         "20": {
@@ -387,6 +922,80 @@
                     1.0
                 ]
             }
+        },
+        "33": {
+            "link": {
+                "name": "blinn1",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "34": {
+            "link": {
+                "name": "lambert2",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "35": {
+            "link": {
+                "name": "lambert1",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "36": {
+            "link": {
+                "name": "blinn1.001",
+                "file": "assets\\quest_controllers.glb"
+            },
+            "Phong": {
+                "emissiveColor": [
+                    9.999999974752428e-7,
+                    0.0,
+                    0.0,
+                    1.0
+                ]
+            }
+        },
+        "37": {
+            "link": {
+                "name": "lambert2.001",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "38": {
+            "link": {
+                "name": "lambert1.001",
+                "file": "assets\\quest_controllers.glb"
+            }
+        },
+        "71": {
+            "name": "MyWhite",
+            "Phong": {
+                "diffuseColor": [
+                    9.999999974752428e-7,
+                    9.882353424472968e-7,
+                    9.882353424472968e-7,
+                    1.0
+                ],
+                "ambientColor": [
+                    0.7529411911964417,
+                    0.7529336810112,
+                    0.7529336810112,
+                    1.0
+                ],
+                "specularColor": [
+                    9.999999974752428e-7,
+                    9.999899930335233e-7,
+                    9.999899930335233e-7,
+                    1.0
+                ],
+                "fogColor": [
+                    1.0,
+                    0.9999899864196777,
+                    0.9999899864196777,
+                    1.0
+                ]
+            },
+            "shader": "Phong"
         }
     },
     "shaders": {
@@ -467,10 +1076,14 @@
         "scripting": {
             "sourcePaths": [
                 "/js/components/",
-                "js/"
+                "js/pp",
+                "js/misc"
             ]
         }
     },
     "animations": {},
-    "skins": {}
+    "skins": {},
+    "files": [
+        "assets/quest_controllers.glb"
+    ]
 }
