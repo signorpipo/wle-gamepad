@@ -38,6 +38,18 @@ PP.ButtonInfo = class ButtonInfo {
         this.myValue = 0.0;
         this.myPrevValue = 0.0;
     }
+
+    clone() {
+        let value = new ButtonInfo();
+        value.myPressed = this.myPressed;
+        value.myPrevPressed = this.myPrevPressed;
+        value.myTouched = this.myTouched;
+        value.myPrevTouched = this.myPrevTouched;
+        value.myValue = this.myValue;
+        value.myPrevValue = this.myPrevValue;
+
+        return value;
+    }
 };
 
 PP.AxesEvent = {
@@ -55,6 +67,14 @@ PP.AxesInfo = class AxesInfo {
 
         this.myPrevAxes = new Float32Array(2);
         this.myPrevAxes.fill(0.0);
+    }
+
+    clone() {
+        let value = new AxesInfo();
+        value.myAxes = this.myAxes;
+        value.myPrevAxes = this.myPrevAxes;
+
+        return value;
     }
 };
 
@@ -93,7 +113,7 @@ PP.Gamepad = class Gamepad {
     }
 
     getButtonInfo(buttonType) {
-        return this.myButtonInfos[buttonType];
+        return this.myButtonInfos[buttonType].clone();
     }
 
     //Callback parameters are (ButtonInfo, Gamepad)
@@ -106,7 +126,7 @@ PP.Gamepad = class Gamepad {
     }
 
     getAxesInfo() {
-        return this.myAxesInfo;
+        return this.myAxesInfo.clone();
     }
 
     //Callback parameters are (AxesInfo, Gamepad)
@@ -272,8 +292,8 @@ PP.Gamepad = class Gamepad {
             this._triggerCallbacks(callbacksMap, this.myAxesInfo);
         }
 
-        //BOTH CHANGED
-        if (glMatrix.vec2.exactEquals(this.myAxesInfo.myAxes, this.myAxesInfo.myPrevAxes)) {
+        //AXES CHANGED
+        if (!glMatrix.vec2.exactEquals(this.myAxesInfo.myAxes, this.myAxesInfo.myPrevAxes)) {
             let callbacksMap = this._myAxesCallbacks[PP.AxesEvent.AXES_CHANGED];
             this._triggerCallbacks(callbacksMap, this.myAxesInfo);
         }

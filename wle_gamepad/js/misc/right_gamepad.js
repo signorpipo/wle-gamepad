@@ -1,4 +1,5 @@
 WL.registerComponent('right_gamepad', {
+    mesh: { type: WL.Type.Object, default: null },
     select: { type: WL.Type.Object, default: null },
     squeeze: { type: WL.Type.Object, default: null },
     thumbstick: { type: WL.Type.Object, default: null },
@@ -8,8 +9,12 @@ WL.registerComponent('right_gamepad', {
     selectValue: { type: WL.Type.Object, default: null },
     xValue: { type: WL.Type.Object, default: null },
     yValue: { type: WL.Type.Object, default: null },
+    thumbstickTilt: { type: WL.Type.Object, default: null },
 }, {
     init: function () {
+        this.mesh.scale([0, 0, 0]);
+        this.meshEnabled = false;
+
         this.selectMaterial = this.select.getComponent("mesh").material.clone();
         this.select.getComponent("mesh").material = this.selectMaterial;
         this.selectPosition = new Float32Array(3);
@@ -44,6 +49,8 @@ WL.registerComponent('right_gamepad', {
         this.selectValueText = this.selectValue.getComponent("text");
         this.xValueText = this.xValue.getComponent("text");
         this.yValueText = this.yValue.getComponent("text");
+
+        this.thumbstickUp = [0, 1, 0];
 
         //PRESSED
         rightGamepad.registerButtonEvent(PP.ButtonType.SELECT, PP.ButtonEvent.PRESSED_START, this, this.selectPressedStart.bind(this));
@@ -84,11 +91,22 @@ WL.registerComponent('right_gamepad', {
         //AXES CHANGED
         rightGamepad.registerAxesEvent(PP.AxesEvent.X_CHANGED, this, this.xValueChanged.bind(this));
         rightGamepad.registerAxesEvent(PP.AxesEvent.Y_CHANGED, this, this.yValueChanged.bind(this));
+        rightGamepad.registerAxesEvent(PP.AxesEvent.AXES_CHANGED, this, this.axesValueChanged.bind(this));
     },
     start: function () {
     },
     update: function (dt) {
-
+        if (this.meshEnabled) {
+            if (!WL.xrSession) {
+                this.mesh.scale([0, 0, 0]);
+                this.meshEnabled = false;
+            }
+        } else {
+            if (WL.xrSession) {
+                this.mesh.resetScaling();
+                this.meshEnabled = true;
+            }
+        }
     },
     //PRESSED
     selectPressedStart: function (buttonInfo, gamepad) {
@@ -193,5 +211,28 @@ WL.registerComponent('right_gamepad', {
         }
 
         this.yValueText.text = text;
+    },
+    axesValueChanged: function (axesInfo, gamepad) {
+        //first reset rotation
+        setLocalUp(this.thumbstickTilt, this.thumbstickUp, [0, 1, 0]);
+
+        let tiltDirection = new Float32Array(3);
+        glMatrix.vec3.add(tiltDirection, [0, 1, 0], [axesInfo.myAxes[0], 0.0, -axesInfo.myAxes[1]]);
+        glMatrix.vec3.normalize(tiltDirection, tiltDirection);
+        setLocalUp(this.thumbstickTilt, [0, 1, 0], tiltDirection);
+
+        this.thumbstickUp = tiltDirection;
     }
 });
+
+function setLocalUp(object, currentUp, newUp) {
+    let rotationAxis = new Float32Array(3);
+    glMatrix.vec3.cross(rotationAxis, currentUp, newUp);
+    glMatrix.vec3.normalize(rotationAxis, rotationAxis);
+
+    let angleToRotate = glMatrix.vec3.angle(currentUp, newUp);
+
+    if (angleToRotate > 0.001) {
+        object.rotateAxisAngleRadObject(rotationAxis, angleToRotate);
+    }
+}
