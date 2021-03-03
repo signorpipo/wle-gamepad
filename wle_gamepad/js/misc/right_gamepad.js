@@ -1,3 +1,5 @@
+//MANAGED WITH EVENTS
+
 WL.registerComponent('right_gamepad', {
     mesh: { type: WL.Type.Object, default: null },
     select: { type: WL.Type.Object, default: null },
@@ -96,17 +98,7 @@ WL.registerComponent('right_gamepad', {
     start: function () {
     },
     update: function (dt) {
-        if (this.meshEnabled) {
-            if (!WL.xrSession) {
-                this.mesh.scale([0, 0, 0]);
-                this.meshEnabled = false;
-            }
-        } else {
-            if (WL.xrSession) {
-                this.mesh.resetScaling();
-                this.meshEnabled = true;
-            }
-        }
+        this.enableMeshInSession();
     },
     //PRESSED
     selectPressedStart: function (buttonInfo, gamepad) {
@@ -128,8 +120,8 @@ WL.registerComponent('right_gamepad', {
     },
     thumbStickPressedStart: function (buttonInfo, gamepad) {
         let newPosition = new Float32Array(this.thumbstickPosition);
-        newPosition[1] -= 0.002;
-        newPosition[2] += 0.002;
+        newPosition[1] -= 0.0025;
+        newPosition[2] += 0.001;
         this.thumbstick.setTranslationLocal(newPosition);
     },
     thumbStickPressedEnd: function (buttonInfo, gamepad) {
@@ -222,6 +214,19 @@ WL.registerComponent('right_gamepad', {
         setLocalUp(this.thumbstickTilt, [0, 1, 0], tiltDirection);
 
         this.thumbstickUp = tiltDirection;
+    },
+    enableMeshInSession: function () {
+        if (this.meshEnabled) {
+            if (!WL.xrSession) {
+                this.mesh.scale([0, 0, 0]);
+                this.meshEnabled = false;
+            }
+        } else {
+            if (WL.xrSession) {
+                this.mesh.resetScaling();
+                this.meshEnabled = true;
+            }
+        }
     }
 });
 
