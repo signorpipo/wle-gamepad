@@ -1,4 +1,6 @@
 //MANAGED WITH EVENTS
+//This code is more to debug the gamepad functionality, it's not the best to look at
+//Especially when I start to rate and go nuts
 
 WL.registerComponent('right_gamepad', {
     mesh: { type: WL.Type.Object, default: null },
@@ -12,6 +14,7 @@ WL.registerComponent('right_gamepad', {
     xValue: { type: WL.Type.Object, default: null },
     yValue: { type: WL.Type.Object, default: null },
     thumbstickTilt: { type: WL.Type.Object, default: null },
+    selectTilt: { type: WL.Type.Object, default: null }
 }, {
     init: function () {
         this.mesh.scale([0, 0, 0]);
@@ -53,6 +56,7 @@ WL.registerComponent('right_gamepad', {
         this.yValueText = this.yValue.getComponent("text");
 
         this.thumbstickUp = [0, 1, 0];
+        this.selectUp = [0, 1, 0];
 
         //PRESSED
         rightGamepad.registerButtonEvent(PP.ButtonType.SELECT, PP.ButtonEvent.PRESSED_START, this, this.selectPressedStart.bind(this));
@@ -102,13 +106,21 @@ WL.registerComponent('right_gamepad', {
     },
     //PRESSED
     selectPressedStart: function (buttonInfo, gamepad) {
-        let newPosition = new Float32Array(this.selectPosition);
-        newPosition[1] += 0.005;
-        newPosition[2] += 0.005;
-        this.select.setTranslationLocal(newPosition);
+        //first reset rotation
+        setLocalUp(this.selectTilt, this.selectUp, [0, 1, 0]);
+
+        let angleToRotate = glMatrix.glMatrix.toRadian(-15);
+        let tiltDirection = [0, 1, 0];
+        glMatrix.vec3.rotateX(tiltDirection, tiltDirection, [0, 0, 0], angleToRotate);
+        glMatrix.vec3.normalize(tiltDirection, tiltDirection);
+
+        setLocalUp(this.selectTilt, [0, 1, 0], tiltDirection);
+
+        this.selectUp = tiltDirection;
     },
     selectPressedEnd: function (buttonInfo, gamepad) {
-        this.select.setTranslationLocal(this.selectPosition);
+        setLocalUp(this.selectTilt, this.selectUp, [0, 1, 0]);
+        this.selectUp = [0, 1, 0];
     },
     squeezePressedStart: function (buttonInfo, gamepad) {
         let newPosition = new Float32Array(this.squeezePosition);
