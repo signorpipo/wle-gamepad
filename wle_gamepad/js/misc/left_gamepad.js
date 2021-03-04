@@ -78,6 +78,8 @@ WL.registerComponent('left_gamepad', {
             setLocalUp(this.selectTilt, [0, 1, 0], tiltDirection);
 
             this.selectUp = tiltDirection;
+
+            leftGamepad.startPulse(button.myValue, 0);
         }
 
         if (button.myTouched) {

@@ -78,6 +78,15 @@ PP.AxesInfo = class AxesInfo {
     }
 };
 
+PP.PulseData = class PulseData {
+    constructor() {
+        this.myIntensity = 0.0;
+        this.myDuration = 0.0;
+
+        this.myIsPulsing = false;
+    }
+};
+
 //xr-standard mapping is assumed for gamepad
 PP.Gamepad = class Gamepad {
     constructor(handedness) {
@@ -110,6 +119,8 @@ PP.Gamepad = class Gamepad {
         for (let eventKey in PP.AxesEvent) {
             this._myAxesCallbacks[PP.AxesEvent[eventKey]] = new Map(); //keys = object, item = callback
         }
+
+        this._pulseData = new PP.PulseData();
     }
 
     getButtonInfo(buttonType) {
@@ -143,6 +154,18 @@ PP.Gamepad = class Gamepad {
         return this.myGamepad != null && (this.myGamepad.connected == null || this.myGamepad.connected);
     }
 
+    //intensity range from 0 to 1
+    //duration is in seconds, 0 means 1 frame
+    startPulse(intensity, duration) {
+        this._pulseData.myIntensity = Math.min(Math.max(intensity, 0), 1); //clamp 
+        this._pulseData.myDuration = Math.max(duration, 0);
+    }
+
+    stopPulse() {
+        this._pulseData.myIntensity = 0;
+        this._pulseData.myDuration = 0;
+    }
+
     start() {
         if (WL.xrSession) {
             this._setupVREvents(WL.xrSession);
@@ -159,6 +182,8 @@ PP.Gamepad = class Gamepad {
         this._preUpdateAxesInfos();
         this._updateAxesInfos();
         this._postUpdateAxesInfos();
+
+        this._updatePulse(dt);
     }
 
     _preUpdateButtonInfos() {
@@ -355,6 +380,39 @@ PP.Gamepad = class Gamepad {
         axes[1] = -axes[1];
 
         return axes;
+    }
+
+    _updatePulse(dt) {
+        let hapticActuator = this._getHapticActuator();
+        if (hapticActuator) {
+            if (this._pulseData.myIntensity > 0) {
+                hapticActuator.pulse(this._pulseData.myIntensity, 1000); //duration is managed by this class
+                this._pulseData.myIsPulsing = true;
+            } else if (this._pulseData.myIsPulsing) {
+                hapticActuator.reset();
+                this._pulseData.myIsPulsing = false;
+            }
+        }
+
+        this._pulseData.myDuration -= dt;
+        if (this._pulseData.myDuration <= 0) {
+            this._pulseData.myIntensity = 0;
+            this._pulseData.myDuration = 0;
+        }
+    }
+
+    _getHapticActuator() {
+        let hapticActuator = null;
+
+        if (this.isGamepadActive()) {
+            if (this.myGamepad.hapticActuators && this.myGamepad.hapticActuators.length > 0) {
+                hapticActuator = this.myGamepad.hapticActuators[0];
+            } else {
+                hapticActuator = this.myGamepad.vibrationActuator;
+            }
+        }
+
+        return hapticActuator;
     }
 
     _setupVREvents(s) {

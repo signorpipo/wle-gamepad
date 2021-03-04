@@ -116,11 +116,15 @@ WL.registerComponent('right_gamepad', {
 
         setLocalUp(this.selectTilt, [0, 1, 0], tiltDirection);
 
+        rightGamepad.startPulse(0.4, 5);
+
         this.selectUp = tiltDirection;
     },
     selectPressedEnd: function (buttonInfo, gamepad) {
         setLocalUp(this.selectTilt, this.selectUp, [0, 1, 0]);
         this.selectUp = [0, 1, 0];
+
+        rightGamepad.stopPulse();
     },
     squeezePressedStart: function (buttonInfo, gamepad) {
         let newPosition = new Float32Array(this.squeezePosition);
