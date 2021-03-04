@@ -24,31 +24,31 @@ WL.registerComponent('left_gamepad', {
         this.select.getComponent("mesh").material = this.selectMaterial;
         this.selectPosition = new Float32Array(3);
         this.select.getTranslationLocal(this.selectPosition);
-        this.selectMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.selectMaterial.ambientColor = normalButtonColor;
 
         this.squeezeMaterial = this.squeeze.getComponent("mesh").material.clone();
         this.squeeze.getComponent("mesh").material = this.squeezeMaterial;
         this.squeezePosition = new Float32Array(3);
         this.squeeze.getTranslationLocal(this.squeezePosition);
-        this.squeezeMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.squeezeMaterial.ambientColor = normalButtonColor;
 
         this.thumbstickMaterial = this.thumbstick.getComponent("mesh").material.clone();
         this.thumbstick.getComponent("mesh").material = this.thumbstickMaterial;
         this.thumbstickPosition = new Float32Array(3);
         this.thumbstick.getTranslationLocal(this.thumbstickPosition);
-        this.thumbstickMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.thumbstickMaterial.ambientColor = normalButtonColor;
 
         this.bottomButtonMaterial = this.bottomButton.getComponent("mesh").material.clone();
         this.bottomButton.getComponent("mesh").material = this.bottomButtonMaterial;
         this.bottomButtonPosition = new Float32Array(3);
         this.bottomButton.getTranslationLocal(this.bottomButtonPosition);
-        this.bottomButtonMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.bottomButtonMaterial.ambientColor = normalButtonColor;
 
         this.topButtonMaterial = this.topButton.getComponent("mesh").material.clone();
         this.topButton.getComponent("mesh").material = this.topButtonMaterial;
         this.topButtonPosition = new Float32Array(3);
         this.topButton.getTranslationLocal(this.topButtonPosition);
-        this.topButtonMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.topButtonMaterial.ambientColor = normalButtonColor;
 
         this.squeezeValueText = this.squeezeValue.getComponent("text");
         this.selectValueText = this.selectValue.getComponent("text");
@@ -81,9 +81,9 @@ WL.registerComponent('left_gamepad', {
         }
 
         if (button.myTouched) {
-            this.selectMaterial.ambientColor = [0, 0, 75, 1];
+            this.selectMaterial.ambientColor = touchedButtonColor;
         } else {
-            this.selectMaterial.ambientColor = [0.75, 0, 0, 1];
+            this.selectMaterial.ambientColor = normalButtonColor;
         }
 
         this.selectValueText.text = button.myValue.toFixed(3);
@@ -98,9 +98,9 @@ WL.registerComponent('left_gamepad', {
         }
 
         if (button.myTouched) {
-            this.squeezeMaterial.ambientColor = [0, 0, 75, 1];
+            this.squeezeMaterial.ambientColor = touchedButtonColor;
         } else {
-            this.squeezeMaterial.ambientColor = [0.75, 0, 0, 1];
+            this.squeezeMaterial.ambientColor = normalButtonColor;
         }
 
         this.squeezeValueText.text = button.myValue.toFixed(3);
@@ -118,9 +118,9 @@ WL.registerComponent('left_gamepad', {
         }
 
         if (button.myTouched) {
-            this.thumbstickMaterial.ambientColor = [0, 0, 75, 1];
+            this.thumbstickMaterial.ambientColor = touchedButtonColor;
         } else {
-            this.thumbstickMaterial.ambientColor = [0.75, 0, 0, 1];
+            this.thumbstickMaterial.ambientColor = normalButtonColor;
         }
 
         this.updateThumbstickValues();
@@ -139,9 +139,9 @@ WL.registerComponent('left_gamepad', {
         }
 
         if (button.myTouched) {
-            this.bottomButtonMaterial.ambientColor = [0, 0, 75, 1];
+            this.bottomButtonMaterial.ambientColor = touchedButtonColor;
         } else {
-            this.bottomButtonMaterial.ambientColor = [0.75, 0, 0, 1];
+            this.bottomButtonMaterial.ambientColor = normalButtonColor;
         }
 
         //TOP BUTTON
@@ -157,9 +157,9 @@ WL.registerComponent('left_gamepad', {
         }
 
         if (button.myTouched) {
-            this.topButtonMaterial.ambientColor = [0, 0, 75, 1];
+            this.topButtonMaterial.ambientColor = touchedButtonColor;
         } else {
-            this.topButtonMaterial.ambientColor = [0.75, 0, 0, 1];
+            this.topButtonMaterial.ambientColor = normalButtonColor;
         }
     },
     updateThumbstickValues: function () {

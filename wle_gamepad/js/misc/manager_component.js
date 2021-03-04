@@ -18,3 +18,6 @@ WL.registerComponent('manager', {
 //But you need to call start and update on them
 var leftGamepad = new PP.Gamepad(PP.Handedness.LEFT);
 var rightGamepad = new PP.Gamepad(PP.Handedness.RIGHT);
+
+var normalButtonColor = [183 / 255, 46 / 255, 35 / 255, 1];
+var touchedButtonColor = [110 / 255, 35 / 255, 157 / 255, 1];

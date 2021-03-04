@@ -24,31 +24,31 @@ WL.registerComponent('right_gamepad', {
         this.select.getComponent("mesh").material = this.selectMaterial;
         this.selectPosition = new Float32Array(3);
         this.select.getTranslationLocal(this.selectPosition);
-        this.selectMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.selectMaterial.ambientColor = normalButtonColor;
 
         this.squeezeMaterial = this.squeeze.getComponent("mesh").material.clone();
         this.squeeze.getComponent("mesh").material = this.squeezeMaterial;
         this.squeezePosition = new Float32Array(3);
         this.squeeze.getTranslationLocal(this.squeezePosition);
-        this.squeezeMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.squeezeMaterial.ambientColor = normalButtonColor;
 
         this.thumbstickMaterial = this.thumbstick.getComponent("mesh").material.clone();
         this.thumbstick.getComponent("mesh").material = this.thumbstickMaterial;
         this.thumbstickPosition = new Float32Array(3);
         this.thumbstick.getTranslationLocal(this.thumbstickPosition);
-        this.thumbstickMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.thumbstickMaterial.ambientColor = normalButtonColor;
 
         this.bottomButtonMaterial = this.bottomButton.getComponent("mesh").material.clone();
         this.bottomButton.getComponent("mesh").material = this.bottomButtonMaterial;
         this.bottomButtonPosition = new Float32Array(3);
         this.bottomButton.getTranslationLocal(this.bottomButtonPosition);
-        this.bottomButtonMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.bottomButtonMaterial.ambientColor = normalButtonColor;
 
         this.topButtonMaterial = this.topButton.getComponent("mesh").material.clone();
         this.topButton.getComponent("mesh").material = this.topButtonMaterial;
         this.topButtonPosition = new Float32Array(3);
         this.topButton.getTranslationLocal(this.topButtonPosition);
-        this.topButtonMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.topButtonMaterial.ambientColor = normalButtonColor;
 
         this.squeezeValueText = this.squeezeValue.getComponent("text");
         this.selectValueText = this.selectValue.getComponent("text");
@@ -159,34 +159,34 @@ WL.registerComponent('right_gamepad', {
     },
     //TOUCHED
     selectTouchedStart: function (buttonInfo, gamepad) {
-        this.selectMaterial.ambientColor = [0, 0, 75, 1];
+        this.selectMaterial.ambientColor = touchedButtonColor;
     },
     selectTouchedEnd: function (buttonInfo, gamepad) {
-        this.selectMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.selectMaterial.ambientColor = normalButtonColor;
     },
     squeezeTouchedStart: function (buttonInfo, gamepad) {
-        this.squeezeMaterial.ambientColor = [0, 0, 75, 1];
+        this.squeezeMaterial.ambientColor = touchedButtonColor;
     },
     squeezeTouchedEnd: function (buttonInfo, gamepad) {
-        this.squeezeMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.squeezeMaterial.ambientColor = normalButtonColor;
     },
     thumbStickTouchedStart: function (buttonInfo, gamepad) {
-        this.thumbstickMaterial.ambientColor = [0, 0, 75, 1];
+        this.thumbstickMaterial.ambientColor = touchedButtonColor;
     },
     thumbStickTouchedEnd: function (buttonInfo, gamepad) {
-        this.thumbstickMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.thumbstickMaterial.ambientColor = normalButtonColor;
     },
     bottomButtonTouchedStart: function (buttonInfo, gamepad) {
-        this.bottomButtonMaterial.ambientColor = [0, 0, 75, 1];
+        this.bottomButtonMaterial.ambientColor = touchedButtonColor;
     },
     bottomButtonTouchedEnd: function (buttonInfo, gamepad) {
-        this.bottomButtonMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.bottomButtonMaterial.ambientColor = normalButtonColor;
     },
     topButtonTouchedStart: function (buttonInfo, gamepad) {
-        this.topButtonMaterial.ambientColor = [0, 0, 75, 1];
+        this.topButtonMaterial.ambientColor = touchedButtonColor;
     },
     topButtonTouchedEnd: function (buttonInfo, gamepad) {
-        this.topButtonMaterial.ambientColor = [0.75, 0, 0, 1];
+        this.topButtonMaterial.ambientColor = normalButtonColor;
     },
     squeezeValueChanged: function (buttonInfo, gamepad) {
         this.squeezeValueText.text = buttonInfo.myValue.toFixed(3);
