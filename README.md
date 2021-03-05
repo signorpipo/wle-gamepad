@@ -8,13 +8,13 @@ Left gamepad and right gamepad in game are handled differently to showcase diffe
 
 ## How to use gamepad.js
 You just need to instantiate somewhere the Gamepad class for both left and right controller (this is an argument for the constructor), and call start on it and then update for every frame.
-
-If you want to register, you can find two register functions, once for buttons and one for thumbstick axes.
-You need to pass them the ButtonType and the Button event you want to register, as an ID (I use the object that wants to register as ID) and the callback.
-For axes you just need to specify the Axes event. These are all enums you can find in the gamepad.js file, that is all you need.
+You can register to events through two functions, one for buttons and one for thumbstick axes.
+For the button one, you need to specify the ButtonType and the Button event you want to register, an ID (I use the object that wants to register as ID) and the callback.
+For axes you just need to specify the Axes event. 
+These are all enums you can find in the gamepad.js file, that is all you need.
 You should remember to unregister to the gamepad when you are done with it (like in a destruction phase of the object that has registered itself to the gamepad).
 
-Otherwise, you can just pool the gamepad by asking the button/axes you want.
+Otherwise, you can just poll the gamepad by asking the button/axes you want.
 
 You can also add a pulse/vibration/rumble to the pad through the pulse method.
 
