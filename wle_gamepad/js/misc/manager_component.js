@@ -1,5 +1,4 @@
 WL.registerComponent('manager', {
-    param: { type: WL.Type.Float, default: 1.0 },
 }, {
     init: function () {
     },

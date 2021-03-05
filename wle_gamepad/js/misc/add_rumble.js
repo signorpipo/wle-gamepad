@@ -21,8 +21,6 @@ WL.registerComponent('add-rumble', {
                 let distance = glMatrix.vec3.distance(this.myTempVector, this.myPosition);
                 distance = Math.min(distance, 0.3);
 
-                console.log(this.myDuration);
-
                 //this is just magic numbers
                 let pulseIntensity = (1 - Math.min(distance / 0.25, 1)) * 0.75;
                 if (this.myDuration > 0) {
@@ -35,6 +33,12 @@ WL.registerComponent('add-rumble', {
                     rightGamepad.pulse(pulseIntensity, this.myDuration);
                 }
             }
+        }
+
+        if (this.myDuration > 0) {
+            this.object.rotateAxisAngleRadObject([0, 1, 0], Math.PI * dt / 2);
+        } else {
+            this.object.rotateAxisAngleRadObject([0, 1, 0], -Math.PI * dt / 2);
         }
     },
 });

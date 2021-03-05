@@ -87,8 +87,16 @@ PP.PulseData = class PulseData {
     }
 };
 
-//xr-standard mapping is assumed for gamepad
+/**
+ * Lets you easily retrieve the current state of a gamepad and register to events
+ * 
+ * xr-standard mapping is assumed for gamepad
+ */
 PP.Gamepad = class Gamepad {
+
+    /**
+     * @param {PP.Handedness} handedness specifies which controller this gamepad will represent, left or right
+     */
     constructor(handedness) {
         this.myHandedness = handedness;
 
@@ -123,40 +131,70 @@ PP.Gamepad = class Gamepad {
         this._pulseData = new PP.PulseData();
     }
 
+    /**
+     * @param {PP.ButtonType} buttonType
+     * @returns {PP.ButtonInfo}
+     */
     getButtonInfo(buttonType) {
         return this.myButtonInfos[buttonType].clone();
     }
 
-    //Callback parameters are (ButtonInfo, Gamepad)
+    /**
+     * @param {PP.ButtonType} buttonType 
+     * @param {PP.ButtonEvent} buttonEvent 
+     * @param id 
+     * @param callback callback params are (PP.ButtonInfo, PP.Gamepad)
+     */
     registerButtonEvent(buttonType, buttonEvent, id, callback) {
         this._myButtonCallbacks[buttonType][buttonEvent].set(id, callback);
     }
 
+    /**
+     * @param {PP.ButtonType} buttonType 
+     * @param {PP.ButtonEvent} buttonEvent 
+     * @param id 
+     */
     unregisterButtonEvent(buttonType, buttonEvent, id) {
         this._myButtonCallbacks[buttonType][buttonEvent].delete(id);
     }
 
+    /**
+     * @returns {PP.AxesInfo}
+     */
     getAxesInfo() {
         return this.myAxesInfo.clone();
     }
 
-    //Callback parameters are (AxesInfo, Gamepad)
+    /**
+     * @param {PP.AxesEvent} axesEvent 
+     * @param id 
+     * @param callback callback parameters are (AxesInfo, Gamepad)
+     */
     registerAxesEvent(axesEvent, id, callback) {
         this._myAxesCallbacks[axesEvent].set(id, callback);
     }
 
+    /**
+     * @param {PP.AxesEvent} axesEvent 
+     * @param id 
+     */
     unregisterAxesEvent(axesEvent, id) {
         this._myAxesCallbacks[axesEvent].delete(id);
     }
 
+    /**
+     * @returns {boolean}
+     */
     isGamepadActive() {
         //connected == null is to fix webxr emulator that leaves that field undefined
         return this.myGamepad != null && (this.myGamepad.connected == null || this.myGamepad.connected);
     }
 
-    //pulse, rumble, vibration, whatever
-    //intensity range from 0 to 1
-    //duration is in seconds, 0 means 1 frame
+    /**
+     * pulse, rumble, vibration, whatever
+     * @param {number} intensity range from 0 to 1
+     * @param {number} duration specified in seconds, 0 means 1 frame
+     */
     pulse(intensity, duration) {
         this._pulseData.myIntensity = Math.min(Math.max(intensity, 0), 1); //clamp 
         this._pulseData.myDuration = Math.max(duration, 0);
