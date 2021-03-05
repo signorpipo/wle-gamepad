@@ -154,9 +154,10 @@ PP.Gamepad = class Gamepad {
         return this.myGamepad != null && (this.myGamepad.connected == null || this.myGamepad.connected);
     }
 
+    //pulse, rumble, vibration, whatever
     //intensity range from 0 to 1
     //duration is in seconds, 0 means 1 frame
-    startPulse(intensity, duration) {
+    pulse(intensity, duration) {
         this._pulseData.myIntensity = Math.min(Math.max(intensity, 0), 1); //clamp 
         this._pulseData.myDuration = Math.max(duration, 0);
     }

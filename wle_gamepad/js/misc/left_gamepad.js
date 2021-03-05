@@ -79,7 +79,9 @@ WL.registerComponent('left_gamepad', {
 
             this.selectUp = tiltDirection;
 
-            leftGamepad.startPulse(button.myValue, 0);
+            if (button.myPressed) {
+                leftGamepad.stopPulse();
+            }
         }
 
         if (button.myTouched) {
