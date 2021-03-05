@@ -170,7 +170,7 @@ WL.registerComponent('left_gamepad', {
         let axesInfo = leftGamepad.getAxesInfo();
         let text = "0.000";
         if (axesInfo.myAxes[0] >= 0.0) {
-            text = " ";
+            text = "  ";
             text = text.concat(axesInfo.myAxes[0].toFixed(3));
         } else {
             text = axesInfo.myAxes[0].toFixed(3);
@@ -181,7 +181,7 @@ WL.registerComponent('left_gamepad', {
         text = "0.000";
 
         if (axesInfo.myAxes[1] >= 0.0) {
-            text = " ";
+            text = "  ";
             text = text.concat(axesInfo.myAxes[1].toFixed(3));
         } else {
             text = axesInfo.myAxes[1].toFixed(3);

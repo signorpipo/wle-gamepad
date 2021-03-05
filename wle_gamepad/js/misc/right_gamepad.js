@@ -199,7 +199,7 @@ WL.registerComponent('right_gamepad', {
     xValueChanged: function (axesInfo, gamepad) {
         let text = "0.000";
         if (axesInfo.myAxes[0] >= 0.0) {
-            text = " ";
+            text = "  ";
             text = text.concat(axesInfo.myAxes[0].toFixed(3));
         } else {
             text = axesInfo.myAxes[0].toFixed(3);
@@ -210,7 +210,7 @@ WL.registerComponent('right_gamepad', {
     yValueChanged: function (axesInfo, gamepad) {
         let text = "0.000";
         if (axesInfo.myAxes[1] >= 0.0) {
-            text = " ";
+            text = "  ";
             text = text.concat(axesInfo.myAxes[1].toFixed(3));
         } else {
             text = axesInfo.myAxes[1].toFixed(3);
