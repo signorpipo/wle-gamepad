@@ -8,6 +8,7 @@ Left gamepad and right gamepad in game are handled differently to showcase diffe
 
 ## How to use gamepad.js
 You just need to instantiate somewhere the Gamepad class for both left and right controller (this is an argument for the constructor), and call start on it and then update for every frame.
+
 You can register to events through two functions, one for buttons and one for thumbstick axes.
 For the button one, you need to specify the ButtonType and the Button event you want to register, an ID (I use the object that wants to register as ID) and the callback.
 For axes you just need to specify the Axes event. 
