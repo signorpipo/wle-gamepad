@@ -18,5 +18,7 @@ WL.registerComponent('manager', {
 var leftGamepad = new PP.Gamepad(PP.Handedness.LEFT);
 var rightGamepad = new PP.Gamepad(PP.Handedness.RIGHT);
 
-var normalButtonColor = [183 / 255, 46 / 255, 35 / 255, 1];
-var touchedButtonColor = [110 / 255, 35 / 255, 157 / 255, 1];
+var normalButtonColor = [242 / 255, 16 / 255, 23 / 255, 1];
+var normalButtonAmbientColor = [116 / 255, 16 / 255, 23 / 255, 1];
+var touchedButtonColor = [153 / 255, 42 / 255, 223 / 255, 1];
+var touchedButtonAmbientColor = [44 / 255, 16 / 255, 116 / 255, 1];

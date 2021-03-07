@@ -155,33 +155,43 @@ WL.registerComponent('right_gamepad_animator', {
     //TOUCHED
     selectTouchedStart: function (buttonInfo, gamepad) {
         this.selectMaterial.diffuseColor = touchedButtonColor;
+        this.selectMaterial.ambientColor = touchedButtonAmbientColor;
     },
     selectTouchedEnd: function (buttonInfo, gamepad) {
         this.selectMaterial.diffuseColor = normalButtonColor;
+        this.selectMaterial.ambientColor = normalButtonAmbientColor;
     },
     squeezeTouchedStart: function (buttonInfo, gamepad) {
         this.squeezeMaterial.diffuseColor = touchedButtonColor;
+        this.squeezeMaterial.ambientColor = touchedButtonAmbientColor;
     },
     squeezeTouchedEnd: function (buttonInfo, gamepad) {
         this.squeezeMaterial.diffuseColor = normalButtonColor;
+        this.squeezeMaterial.ambientColor = normalButtonAmbientColor;
     },
     thumbStickTouchedStart: function (buttonInfo, gamepad) {
         this.thumbstickMaterial.diffuseColor = touchedButtonColor;
+        this.thumbstickMaterial.ambientColor = touchedButtonAmbientColor;
     },
     thumbStickTouchedEnd: function (buttonInfo, gamepad) {
         this.thumbstickMaterial.diffuseColor = normalButtonColor;
+        this.thumbstickMaterial.ambientColor = normalButtonAmbientColor;
     },
     bottomButtonTouchedStart: function (buttonInfo, gamepad) {
         this.bottomButtonMaterial.diffuseColor = touchedButtonColor;
+        this.bottomButtonMaterial.ambientColor = touchedButtonAmbientColor;
     },
     bottomButtonTouchedEnd: function (buttonInfo, gamepad) {
         this.bottomButtonMaterial.diffuseColor = normalButtonColor;
+        this.bottomButtonMaterial.ambientColor = normalButtonAmbientColor;
     },
     topButtonTouchedStart: function (buttonInfo, gamepad) {
         this.topButtonMaterial.diffuseColor = touchedButtonColor;
+        this.topButtonMaterial.ambientColor = touchedButtonAmbientColor;
     },
     topButtonTouchedEnd: function (buttonInfo, gamepad) {
         this.topButtonMaterial.diffuseColor = normalButtonColor;
+        this.topButtonMaterial.ambientColor = normalButtonAmbientColor;
     },
     squeezeValueChanged: function (buttonInfo, gamepad) {
         this.squeezeValueText.text = buttonInfo.myValue.toFixed(3);

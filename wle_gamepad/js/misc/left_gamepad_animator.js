@@ -84,8 +84,10 @@ WL.registerComponent('left_gamepad_animator', {
 
         if (button.myTouched) {
             this.selectMaterial.diffuseColor = touchedButtonColor;
+            this.selectMaterial.ambientColor = touchedButtonAmbientColor;
         } else {
             this.selectMaterial.diffuseColor = normalButtonColor;
+            this.selectMaterial.ambientColor = normalButtonAmbientColor;
         }
 
         this.selectValueText.text = button.myValue.toFixed(3);
@@ -98,8 +100,10 @@ WL.registerComponent('left_gamepad_animator', {
 
         if (button.myTouched) {
             this.squeezeMaterial.diffuseColor = touchedButtonColor;
+            this.squeezeMaterial.ambientColor = touchedButtonAmbientColor;
         } else {
             this.squeezeMaterial.diffuseColor = normalButtonColor;
+            this.squeezeMaterial.ambientColor = normalButtonAmbientColor;
         }
 
         this.squeezeValueText.text = button.myValue.toFixed(3);
@@ -117,8 +121,10 @@ WL.registerComponent('left_gamepad_animator', {
 
         if (button.myTouched) {
             this.thumbstickMaterial.diffuseColor = touchedButtonColor;
+            this.thumbstickMaterial.ambientColor = touchedButtonAmbientColor;
         } else {
             this.thumbstickMaterial.diffuseColor = normalButtonColor;
+            this.thumbstickMaterial.ambientColor = normalButtonAmbientColor;
         }
 
         this.updateThumbstickValues();
@@ -135,8 +141,10 @@ WL.registerComponent('left_gamepad_animator', {
 
         if (button.myTouched) {
             this.bottomButtonMaterial.diffuseColor = touchedButtonColor;
+            this.bottomButtonMaterial.ambientColor = touchedButtonAmbientColor;
         } else {
             this.bottomButtonMaterial.diffuseColor = normalButtonColor;
+            this.bottomButtonMaterial.ambientColor = normalButtonAmbientColor;
         }
 
         //TOP BUTTON
@@ -149,8 +157,10 @@ WL.registerComponent('left_gamepad_animator', {
 
         if (button.myTouched) {
             this.topButtonMaterial.diffuseColor = touchedButtonColor;
+            this.topButtonMaterial.ambientColor = touchedButtonAmbientColor;
         } else {
             this.topButtonMaterial.diffuseColor = normalButtonColor;
+            this.topButtonMaterial.ambientColor = normalButtonAmbientColor;
         }
     },
     updateThumbstickValues: function () {
