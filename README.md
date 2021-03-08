@@ -6,20 +6,23 @@ Left gamepad and right gamepad in game are handled differently to showcase diffe
   - Left is managed by polling the status of the gamepad
   - Right is managed by registering to gamepad events
 
-## How to use gamepad.js
-You just need to instantiate somewhere the Gamepad class for both left and right controller (this is an argument for the constructor), and call start on it and then update for every frame.
+## How to import and use gamepad.js
+To import gamepad.js you have to:
+- Copy gamepad.js somewhere in your js folder
+- Copy the pp folder into your main js folder, this folder contains the pp.js file with the PP namespace declaration in it
+- This folder should only contain this item
+- You must link this folder in the Java Script Sources list (under Project Settings) before any other folders that contain scripts that use the PP namespace
+- If you put it as first (after /js/components/) you will be safe
+- If you don't want to use the PP namespace just remove it from the gamepad.js class, in this case you won't need pp.js
 
-You can register to events through two functions, one for buttons and one for thumbstick axes.
-For the button one, you need to specify the ButtonType and the Button event you want to register, an ID (I use the object that wants to register as ID) and the callback.
-For axes you just need to specify the Axes event. 
-These are all enums you can find in the gamepad.js file, that is all you need.
-You should remember to unregister to the gamepad when you are done with it (like in a destruction phase of the object that has registered itself to the gamepad).
+To use gamepad.js you have to:
+- Instantiate the Gamepad class somewhere for both left and right controller
+- Call start and update on it 
 
-Otherwise, you can just poll the gamepad by asking the button/axes you want.
-
-You can also add a pulse/vibration/rumble to the pad through the pulse method.
-
-I've used a namespace PP for all the classes, if you don't want it just find and replace PP. with empty string.
+At this point you can:
+- Register/unregister to buttons and axes events
+- Poll the button or axes state directly
+- Add a pulse/vibration/rumble to the gamepad and stop it
 
 ## Credits
 Oculus Quest Controller Models by Jezza3D on Sketchfab.
