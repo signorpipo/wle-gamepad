@@ -18,7 +18,7 @@ To import gamepad.js you have to:
 To use gamepad.js you have to:
 - Instantiate the Gamepad class somewhere for both left and right controller
 - Call start and update on it 
-- You could import gamepad_manager_component.js component and add it to the Player object to have a simple way to instantiate/start/update the gamepads
+- You could import gamepads_manager_component.js component and add it to the Player object to have a simple way to instantiate/start/update the gamepads
   - In this case LeftGamepad and RightGamepad will be global variables
 
 At this point you can:
@@ -32,7 +32,7 @@ If you want to import the gamepad models with the animation of the buttons you h
 - Import gamepad_animator.js
 - Inside gamepad_animator.js you can search for @EDIT tags where you can/have to make modifications
   - You have to specify how to retrieve the left and right gamepad instances
-  - If you are using the gamepad_manager_component.js component you just have to specify LeftGamepad or RightGamepad
+  - If you are using the gamepads_manager_component.js component you just have to specify LeftGamepad or RightGamepad
   - You can also specify different colors for normal/touched button state, null means the colors will not be changed
 - Import the quest_controllers_credits_Jezza3D.glb inside your assets folder
 - Drop them on the Player object
