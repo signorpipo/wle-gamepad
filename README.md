@@ -38,7 +38,9 @@ If you want to import the gamepad models with the animation of the buttons you h
 - Drop them on the Player object
 - On both of them you have to
   - Add input component
+  - Specify the handedness
   - Add the gamepad-animator component
+  - Specify the handedness
   - Fill the gamepad-animator component with the objects from the linked gamepad
 
 ## Credits
