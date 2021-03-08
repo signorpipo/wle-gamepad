@@ -18,8 +18,8 @@ WL.registerComponent('gamepad_animator', {
 
         this._myNormalDiffuseButtonColor = null; //@EDIT with the color you want, or leave null to keep the material color, set all color variables or none
         this._myNormalAmbientButtonColor = null; // set them like this [x/255, y/255, z/255, w/255]
-        this._myTouchedDiffuseButtonColor = null;
-        this._myTouchedAmbientButtonColor = null;
+        this._myIsTouchedDiffuseButtonColor = null;
+        this._myIsTouchedAmbientButtonColor = null;
 
         this._mySelectMaterial = this.mySelect.getComponent("mesh").material.clone();
         this.mySelect.getComponent("mesh").material = this._mySelectMaterial;
@@ -104,7 +104,7 @@ WL.registerComponent('gamepad_animator', {
         this._mySelectForward = [0, 0, 1];
 
         this.object.scale([0, 0, 0]);
-        this._myMeshEnabled = false;
+        this._myIsMeshEnabled = false;
 
     },
     start: function () {
@@ -138,8 +138,8 @@ WL.registerComponent('gamepad_animator', {
     //TOUCHED
     _selectTouchedStart: function (buttonInfo, gamepad) {
         if (this._myNormalDiffuseButtonColor) {
-            this._mySelectMaterial.diffuseColor = this._myTouchedDiffuseButtonColor;
-            this._mySelectMaterial.ambientColor = this._myTouchedAmbientButtonColor;
+            this._mySelectMaterial.diffuseColor = this._myIsTouchedDiffuseButtonColor;
+            this._mySelectMaterial.ambientColor = this._myIsTouchedAmbientButtonColor;
         }
     },
     _selectTouchedEnd: function (buttonInfo, gamepad) {
@@ -150,8 +150,8 @@ WL.registerComponent('gamepad_animator', {
     },
     _squeezeTouchedStart: function (buttonInfo, gamepad) {
         if (this._myNormalDiffuseButtonColor) {
-            this._mySqueezeMaterial.diffuseColor = this._myTouchedDiffuseButtonColor;
-            this._mySqueezeMaterial.ambientColor = this._myTouchedAmbientButtonColor;
+            this._mySqueezeMaterial.diffuseColor = this._myIsTouchedDiffuseButtonColor;
+            this._mySqueezeMaterial.ambientColor = this._myIsTouchedAmbientButtonColor;
         }
     },
     _squeezeTouchedEnd: function (buttonInfo, gamepad) {
@@ -162,8 +162,8 @@ WL.registerComponent('gamepad_animator', {
     },
     _thumbStickTouchedStart: function (buttonInfo, gamepad) {
         if (this._myNormalDiffuseButtonColor) {
-            this._myThumbstickMaterial.diffuseColor = this._myTouchedDiffuseButtonColor;
-            this._myThumbstickMaterial.ambientColor = this._myTouchedAmbientButtonColor;
+            this._myThumbstickMaterial.diffuseColor = this._myIsTouchedDiffuseButtonColor;
+            this._myThumbstickMaterial.ambientColor = this._myIsTouchedAmbientButtonColor;
         }
     },
     _thumbStickTouchedEnd: function (buttonInfo, gamepad) {
@@ -174,8 +174,8 @@ WL.registerComponent('gamepad_animator', {
     },
     _bottomButtonTouchedStart: function (buttonInfo, gamepad) {
         if (this._myNormalDiffuseButtonColor) {
-            this._myBottomButtonMaterial.diffuseColor = this._myTouchedDiffuseButtonColor;
-            this._myBottomButtonMaterial.ambientColor = this._myTouchedAmbientButtonColor;
+            this._myBottomButtonMaterial.diffuseColor = this._myIsTouchedDiffuseButtonColor;
+            this._myBottomButtonMaterial.ambientColor = this._myIsTouchedAmbientButtonColor;
         }
     },
     _bottomButtonTouchedEnd: function (buttonInfo, gamepad) {
@@ -186,8 +186,8 @@ WL.registerComponent('gamepad_animator', {
     },
     _topButtonTouchedStart: function (buttonInfo, gamepad) {
         if (this._myNormalDiffuseButtonColor) {
-            this._myTopButtonMaterial.diffuseColor = this._myTouchedDiffuseButtonColor;
-            this._myTopButtonMaterial.ambientColor = this._myTouchedAmbientButtonColor;
+            this._myTopButtonMaterial.diffuseColor = this._myIsTouchedDiffuseButtonColor;
+            this._myTopButtonMaterial.ambientColor = this._myIsTouchedAmbientButtonColor;
         }
     },
     _topButtonTouchedEnd: function (buttonInfo, gamepad) {
@@ -253,10 +253,10 @@ WL.registerComponent('gamepad_animator', {
         return tempVector;
     },
     _enableMeshInSession: function () {
-        if (!this._myMeshEnabled) {
+        if (!this._myIsMeshEnabled) {
             if (WL.xrSession) {
                 this.object.resetScaling();
-                this._myMeshEnabled = true;
+                this._myIsMeshEnabled = true;
             }
         }
     }

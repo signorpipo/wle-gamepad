@@ -29,11 +29,11 @@ PP.ButtonEvent = {
 
 PP.ButtonInfo = class ButtonInfo {
     constructor() {
-        this.myPressed = false;
-        this.myPrevPressed = false;
+        this.myIsPressed = false;
+        this.myIsPrevPressed = false;
 
-        this.myTouched = false;
-        this.myPrevTouched = false;
+        this.myIsTouched = false;
+        this.myIsPrevTouched = false;
 
         this.myValue = 0.0;
         this.myPrevValue = 0.0;
@@ -41,10 +41,10 @@ PP.ButtonInfo = class ButtonInfo {
 
     clone() {
         let value = new ButtonInfo();
-        value.myPressed = this.myPressed;
-        value.myPrevPressed = this.myPrevPressed;
-        value.myTouched = this.myTouched;
-        value.myPrevTouched = this.myPrevTouched;
+        value.myIsPressed = this.myIsPressed;
+        value.myIsPrevPressed = this.myIsPrevPressed;
+        value.myIsTouched = this.myIsTouched;
+        value.myIsPrevTouched = this.myIsPrevTouched;
         value.myValue = this.myValue;
         value.myPrevValue = this.myPrevValue;
 
@@ -128,7 +128,7 @@ PP.Gamepad = class Gamepad {
             this._myAxesCallbacks[PP.AxesEvent[eventKey]] = new Map(); //keys = object, item = callback
         }
 
-        this._pulseData = new PP.PulseData();
+        this._myPulseData = new PP.PulseData();
     }
 
     /**
@@ -196,13 +196,13 @@ PP.Gamepad = class Gamepad {
      * @param {number} duration specified in seconds, 0 means 1 frame
      */
     pulse(intensity, duration) {
-        this._pulseData.myIntensity = Math.min(Math.max(intensity, 0), 1); //clamp 
-        this._pulseData.myDuration = Math.max(duration, 0);
+        this._myPulseData.myIntensity = Math.min(Math.max(intensity, 0), 1); //clamp 
+        this._myPulseData.myDuration = Math.max(duration, 0);
     }
 
     stopPulse() {
-        this._pulseData.myIntensity = 0;
-        this._pulseData.myDuration = 0;
+        this._myPulseData.myIntensity = 0;
+        this._myPulseData.myDuration = 0;
     }
 
     start() {
@@ -227,8 +227,8 @@ PP.Gamepad = class Gamepad {
 
     _preUpdateButtonInfos() {
         this.myButtonInfos.forEach(function (item) {
-            item.myPrevPressed = item.myPressed;
-            item.myPrevTouched = item.myTouched;
+            item.myIsPrevPressed = item.myIsPressed;
+            item.myIsPrevTouched = item.myIsTouched;
             item.myPrevValue = item.myValue;
         });
     }
@@ -247,19 +247,19 @@ PP.Gamepad = class Gamepad {
         let buttonSelect = this.myButtonInfos[PP.ButtonType.SELECT];
 
         if (this._mySelectStart) {
-            buttonSelect.myPressed = true;
+            buttonSelect.myIsPressed = true;
         }
         if (this._mySelectEnd) {
-            buttonSelect.myPressed = false;
+            buttonSelect.myIsPressed = false;
         }
 
         let buttonSqueeze = this.myButtonInfos[PP.ButtonType.SQUEEZE];
         if (this._mySqueezeStart) {
-            buttonSqueeze.myPressed = true;
+            buttonSqueeze.myIsPressed = true;
         }
 
         if (this._mySqueezeEnd) {
-            buttonSqueeze.myPressed = false;
+            buttonSqueeze.myIsPressed = false;
         }
     }
 
@@ -268,10 +268,10 @@ PP.Gamepad = class Gamepad {
         let internalButton = this._getInternalButton(buttonType);
 
         if (updatePressed) {
-            button.myPressed = internalButton.pressed;
+            button.myIsPressed = internalButton.pressed;
         }
 
-        button.myTouched = internalButton.touched;
+        button.myIsTouched = internalButton.touched;
         button.myValue = internalButton.value;
     }
 
@@ -281,17 +281,17 @@ PP.Gamepad = class Gamepad {
             let buttonCallbacks = this._myButtonCallbacks[PP.ButtonType[typeKey]];
 
             //PRESSED
-            if (buttonInfo.myPressed && !buttonInfo.myPrevPressed) {
+            if (buttonInfo.myIsPressed && !buttonInfo.myIsPrevPressed) {
                 let callbacksMap = buttonCallbacks[PP.ButtonEvent.PRESSED_START];
                 this._triggerCallbacks(callbacksMap, buttonInfo);
             }
 
-            if (!buttonInfo.myPressed && buttonInfo.myPrevPressed) {
+            if (!buttonInfo.myIsPressed && buttonInfo.myIsPrevPressed) {
                 let callbacksMap = buttonCallbacks[PP.ButtonEvent.PRESSED_END];
                 this._triggerCallbacks(callbacksMap, buttonInfo);
             }
 
-            if (buttonInfo.myPressed) {
+            if (buttonInfo.myIsPressed) {
                 let callbacksMap = buttonCallbacks[PP.ButtonEvent.PRESSED];
                 this._triggerCallbacks(callbacksMap, buttonInfo);
             } else {
@@ -300,17 +300,17 @@ PP.Gamepad = class Gamepad {
             }
 
             //TOUCHED
-            if (buttonInfo.myTouched && !buttonInfo.myPrevTouched) {
+            if (buttonInfo.myIsTouched && !buttonInfo.myIsPrevTouched) {
                 let callbacksMap = buttonCallbacks[PP.ButtonEvent.TOUCHED_START];
                 this._triggerCallbacks(callbacksMap, buttonInfo);
             }
 
-            if (!buttonInfo.myTouched && buttonInfo.myPrevTouched) {
+            if (!buttonInfo.myIsTouched && buttonInfo.myIsPrevTouched) {
                 let callbacksMap = buttonCallbacks[PP.ButtonEvent.TOUCHED_END];
                 this._triggerCallbacks(callbacksMap, buttonInfo);
             }
 
-            if (buttonInfo.myTouched) {
+            if (buttonInfo.myIsTouched) {
                 let callbacksMap = buttonCallbacks[PP.ButtonEvent.TOUCHED];
                 this._triggerCallbacks(callbacksMap, buttonInfo);
             } else {
@@ -424,19 +424,19 @@ PP.Gamepad = class Gamepad {
     _updatePulse(dt) {
         let hapticActuator = this._getHapticActuator();
         if (hapticActuator) {
-            if (this._pulseData.myIntensity > 0) {
-                hapticActuator.pulse(this._pulseData.myIntensity, 1000); //duration is managed by this class
-                this._pulseData.myIsPulsing = true;
-            } else if (this._pulseData.myIsPulsing) {
+            if (this._myPulseData.myIntensity > 0) {
+                hapticActuator.pulse(this._myPulseData.myIntensity, 1000); //duration is managed by this class
+                this._myPulseData.myIsPulsing = true;
+            } else if (this._myPulseData.myIsPulsing) {
                 hapticActuator.reset();
-                this._pulseData.myIsPulsing = false;
+                this._myPulseData.myIsPulsing = false;
             }
         }
 
-        this._pulseData.myDuration -= dt;
-        if (this._pulseData.myDuration <= 0) {
-            this._pulseData.myIntensity = 0;
-            this._pulseData.myDuration = 0;
+        this._myPulseData.myDuration -= dt;
+        if (this._myPulseData.myDuration <= 0) {
+            this._myPulseData.myIntensity = 0;
+            this._myPulseData.myDuration = 0;
         }
     }
 

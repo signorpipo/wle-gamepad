@@ -77,12 +77,12 @@ WL.registerComponent('left_gamepad_animator', {
 
             this.selectForward = tiltDirection;
 
-            if (button.myPressed) {
+            if (button.myIsPressed) {
                 leftGamepad.stopPulse();
             }
         }
 
-        if (button.myTouched) {
+        if (button.myIsTouched) {
             this.selectMaterial.diffuseColor = touchedButtonColor;
             this.selectMaterial.ambientColor = touchedButtonAmbientColor;
         } else {
@@ -98,7 +98,7 @@ WL.registerComponent('left_gamepad_animator', {
         this.squeeze.setTranslationLocal(this.squeezePosition);
         this.translateLocalAxis(this.squeeze, [1, 0, 0], 0.0015 * button.myValue);
 
-        if (button.myTouched) {
+        if (button.myIsTouched) {
             this.squeezeMaterial.diffuseColor = touchedButtonColor;
             this.squeezeMaterial.ambientColor = touchedButtonAmbientColor;
         } else {
@@ -112,14 +112,14 @@ WL.registerComponent('left_gamepad_animator', {
         button = leftGamepad.getButtonInfo(PP.ButtonType.THUMBSTICK);
 
         this.thumbstick.setTranslationLocal(this.thumbstickPosition);
-        if (button.myPressed) {
+        if (button.myIsPressed) {
             //since thumbstick can rotate I need to specifically use its initial forward
             let tempVector = glMatrix.vec3.create();
             glMatrix.vec3.scale(tempVector, this.thumbstickInitialLocalForward, 0.0015);
             this.thumbstick.translate(tempVector);
         }
 
-        if (button.myTouched) {
+        if (button.myIsTouched) {
             this.thumbstickMaterial.diffuseColor = touchedButtonColor;
             this.thumbstickMaterial.ambientColor = touchedButtonAmbientColor;
         } else {
@@ -135,11 +135,11 @@ WL.registerComponent('left_gamepad_animator', {
 
         this.bottomButton.setTranslationLocal(this.bottomButtonPosition);
 
-        if (button.myPressed) {
+        if (button.myIsPressed) {
             this.translateLocalAxis(this.bottomButton, [0, 0, 1], 0.002);
         }
 
-        if (button.myTouched) {
+        if (button.myIsTouched) {
             this.bottomButtonMaterial.diffuseColor = touchedButtonColor;
             this.bottomButtonMaterial.ambientColor = touchedButtonAmbientColor;
         } else {
@@ -151,11 +151,11 @@ WL.registerComponent('left_gamepad_animator', {
         button = leftGamepad.getButtonInfo(PP.ButtonType.TOP_BUTTON);
 
         this.topButton.setTranslationLocal(this.topButtonPosition);
-        if (button.myPressed) {
+        if (button.myIsPressed) {
             this.translateLocalAxis(this.topButton, [0, 0, 1], 0.002);
         }
 
-        if (button.myTouched) {
+        if (button.myIsTouched) {
             this.topButtonMaterial.diffuseColor = touchedButtonColor;
             this.topButtonMaterial.ambientColor = touchedButtonAmbientColor;
         } else {
