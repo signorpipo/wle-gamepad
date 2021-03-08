@@ -59,8 +59,8 @@ WL.registerComponent('right_gamepad_animator', {
         rightGamepad.registerButtonEvent(PP.ButtonType.SQUEEZE, PP.ButtonEvent.PRESSED_START, this, this.squeezePressedStart.bind(this));
         rightGamepad.registerButtonEvent(PP.ButtonType.SQUEEZE, PP.ButtonEvent.PRESSED_END, this, this.squeezePressedEnd.bind(this));
 
-        rightGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.PRESSED_START, this, this.thumbStickPressedStart.bind(this));
-        rightGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.PRESSED_END, this, this.thumbStickPressedEnd.bind(this));
+        rightGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.PRESSED_START, this, this.thumbstickPressedStart.bind(this));
+        rightGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.PRESSED_END, this, this.thumbstickPressedEnd.bind(this));
 
         rightGamepad.registerButtonEvent(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.PRESSED_START, this, this.bottomButtonPressedStart.bind(this));
         rightGamepad.registerButtonEvent(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.PRESSED_END, this, this.bottomButtonPressedEnd.bind(this));
@@ -75,8 +75,8 @@ WL.registerComponent('right_gamepad_animator', {
         rightGamepad.registerButtonEvent(PP.ButtonType.SQUEEZE, PP.ButtonEvent.TOUCHED_START, this, this.squeezeTouchedStart.bind(this));
         rightGamepad.registerButtonEvent(PP.ButtonType.SQUEEZE, PP.ButtonEvent.TOUCHED_END, this, this.squeezeTouchedEnd.bind(this));
 
-        rightGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.TOUCHED_START, this, this.thumbStickTouchedStart.bind(this));
-        rightGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.TOUCHED_END, this, this.thumbStickTouchedEnd.bind(this));
+        rightGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.TOUCHED_START, this, this.thumbstickTouchedStart.bind(this));
+        rightGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.TOUCHED_END, this, this.thumbstickTouchedEnd.bind(this));
 
         rightGamepad.registerButtonEvent(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.TOUCHED_START, this, this.bottomButtonTouchedStart.bind(this));
         rightGamepad.registerButtonEvent(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.TOUCHED_END, this, this.bottomButtonTouchedEnd.bind(this));
@@ -129,13 +129,13 @@ WL.registerComponent('right_gamepad_animator', {
     squeezePressedEnd: function (buttonInfo, gamepad) {
         this.translateLocalAxis(this.squeeze, [1, 0, 0], 0.0015);
     },
-    thumbStickPressedStart: function (buttonInfo, gamepad) {
+    thumbstickPressedStart: function (buttonInfo, gamepad) {
         //since thumbstick can rotate I need to specifically use its initial forward
         let tempVector = glMatrix.vec3.create();
         glMatrix.vec3.scale(tempVector, this.thumbstickInitialLocalForward, 0.0015);
         this.thumbstick.translate(tempVector);
     },
-    thumbStickPressedEnd: function (buttonInfo, gamepad) {
+    thumbstickPressedEnd: function (buttonInfo, gamepad) {
         let tempVector = glMatrix.vec3.create();
         glMatrix.vec3.scale(tempVector, this.thumbstickInitialLocalForward, -0.0015);
         this.thumbstick.translate(tempVector);
@@ -169,11 +169,11 @@ WL.registerComponent('right_gamepad_animator', {
         this.squeezeMaterial.diffuseColor = normalButtonColor;
         this.squeezeMaterial.ambientColor = normalButtonAmbientColor;
     },
-    thumbStickTouchedStart: function (buttonInfo, gamepad) {
+    thumbstickTouchedStart: function (buttonInfo, gamepad) {
         this.thumbstickMaterial.diffuseColor = touchedButtonColor;
         this.thumbstickMaterial.ambientColor = touchedButtonAmbientColor;
     },
-    thumbStickTouchedEnd: function (buttonInfo, gamepad) {
+    thumbstickTouchedEnd: function (buttonInfo, gamepad) {
         this.thumbstickMaterial.diffuseColor = normalButtonColor;
         this.thumbstickMaterial.ambientColor = normalButtonAmbientColor;
     },

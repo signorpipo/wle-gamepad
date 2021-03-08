@@ -99,7 +99,7 @@ WL.registerComponent('gamepad_animator', {
         //AXES CHANGED
         this._myGamepad.registerAxesEvent(PP.AxesEvent.AXES_CHANGED, this, this._axesValueChanged.bind(this));
 
-        this._myThumbstickInitialLocalForward = this._getLocalAxis(this._myThumbstick, [0, 0, 1]);
+        this._myThumbstickInitialLocalForward = this._getLocalAxis(this.myThumbstick, [0, 0, 1]);
         this._myThumbstickForward = [0, 0, 1];
         this._mySelectForward = [0, 0, 1];
 
@@ -112,28 +112,28 @@ WL.registerComponent('gamepad_animator', {
     update: function (dt) {
         this._enableMeshInSession();
     },
-    _thumbStickPressedStart: function (buttonInfo, gamepad) {
+    _thumbstickPressedStart: function (buttonInfo, gamepad) {
         //since thumbstick object rotate I need to specifically use its initial forward
         let tempVector = glMatrix.vec3.create();
         glMatrix.vec3.scale(tempVector, this._myThumbstickInitialLocalForward, 0.0015);
         this.myThumbstick.translate(tempVector);
     },
-    _thumbStickPressedEnd: function (buttonInfo, gamepad) {
+    _thumbstickPressedEnd: function (buttonInfo, gamepad) {
         let tempVector = glMatrix.vec3.create();
         glMatrix.vec3.scale(tempVector, this._myThumbstickInitialLocalForward, -0.0015);
         this.myThumbstick.translate(tempVector);
     },
     _bottomButtonPressedStart: function (buttonInfo, gamepad) {
-        this._translateLocalAxis(this._myBottomButton, [0, 0, 1], 0.002);
+        this._translateLocalAxis(this.myBottomButton, [0, 0, 1], 0.002);
     },
     _bottomButtonPressedEnd: function (buttonInfo, gamepad) {
-        this._translateLocalAxis(this._myBottomButton, [0, 0, 1], -0.002);
+        this._translateLocalAxis(this.myBottomButton, [0, 0, 1], -0.002);
     },
     _topButtonPressedStart: function (buttonInfo, gamepad) {
-        this._translateLocalAxis(this._myTopButton, [0, 0, 1], 0.002);
+        this._translateLocalAxis(this.myTopButton, [0, 0, 1], 0.002);
     },
     _topButtonPressedEnd: function (buttonInfo, gamepad) {
-        this._translateLocalAxis(this._myTopButton, [0, 0, 1], -0.002);
+        this._translateLocalAxis(this.myTopButton, [0, 0, 1], -0.002);
     },
     //TOUCHED
     _selectTouchedStart: function (buttonInfo, gamepad) {
@@ -160,13 +160,13 @@ WL.registerComponent('gamepad_animator', {
             this._mySqueezeMaterial.ambientColor = this._myNormalAmbientButtonColor;
         }
     },
-    _thumbStickTouchedStart: function (buttonInfo, gamepad) {
+    _thumbstickTouchedStart: function (buttonInfo, gamepad) {
         if (this._myNormalDiffuseButtonColor) {
             this._myThumbstickMaterial.diffuseColor = this._myIsTouchedDiffuseButtonColor;
             this._myThumbstickMaterial.ambientColor = this._myIsTouchedAmbientButtonColor;
         }
     },
-    _thumbStickTouchedEnd: function (buttonInfo, gamepad) {
+    _thumbstickTouchedEnd: function (buttonInfo, gamepad) {
         if (this._myNormalDiffuseButtonColor) {
             this._myThumbstickMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
             this._myThumbstickMaterial.ambientColor = this._myNormalAmbientButtonColor;
@@ -198,16 +198,16 @@ WL.registerComponent('gamepad_animator', {
     },
     _selectValueChanged: function (buttonInfo, gamepad) {
         //first reset rotation to start position
-        this.copyAlignRotation(this._select, this._selectForward, [0, 0, 1]);
+        this._copyAlignRotation(this.mySelect, this._mySelectForward, [0, 0, 1]);
 
         let angleToRotate = glMatrix.glMatrix.toRadian(15 * buttonInfo.myValue);
         let tiltDirection = [0, 0, 1];
         glMatrix.vec3.rotateX(tiltDirection, tiltDirection, [0, 0, 0], angleToRotate);
         glMatrix.vec3.normalize(tiltDirection, tiltDirection);
 
-        this.copyAlignRotation(this._select, [0, 0, 1], tiltDirection);
+        this._copyAlignRotation(this.mySelect, [0, 0, 1], tiltDirection);
 
-        this._selectForward = tiltDirection;
+        this._mySelectForward = tiltDirection;
     },
     _squeezeValueChanged: function (buttonInfo, gamepad) {
         this.mySqueeze.setTranslationLocal(this._mySqueezePosition);
@@ -215,17 +215,17 @@ WL.registerComponent('gamepad_animator', {
         if (this.myHandedness == 1) {
             translation *= -1;
         }
-        this.translateLocalAxis(this.mySqueeze, [1, 0, 0], translation * buttonInfo.myValue);
+        this._translateLocalAxis(this.mySqueeze, [1, 0, 0], translation * buttonInfo.myValue);
     },
     _axesValueChanged: function (axesInfo, gamepad) {
         //first reset rotation to start position
-        this._copyAlignRotation(this._myThumbstick, this._myThumbstickForward, [0, 0, 1]);
+        this._copyAlignRotation(this.myThumbstick, this._myThumbstickForward, [0, 0, 1]);
 
         let tiltDirection = new Float32Array(3);
         glMatrix.vec3.add(tiltDirection, [0, 0, 1], [axesInfo.myAxes[0], -axesInfo.myAxes[1], 0.0]);
         glMatrix.vec3.normalize(tiltDirection, tiltDirection);
 
-        this._copyAlignRotation(this._myThumbstick, [0, 0, 1], tiltDirection);
+        this._copyAlignRotation(this.myThumbstick, [0, 0, 1], tiltDirection);
 
         this._myThumbstickForward = tiltDirection;
     },
