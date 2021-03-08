@@ -2,15 +2,15 @@
  * Animate the buttons of a gamepad, like pressing, thumbstick tilting and so on
  */
 WL.registerComponent('gamepad-animator', {
-    myHandedness: { type: WL.Type.Enum, values: ['left', 'right'], default: 'left' },
-    mySelect: { type: WL.Type.Object, default: null },
-    mySqueeze: { type: WL.Type.Object, default: null },
-    myThumbstick: { type: WL.Type.Object, default: null },
-    myBottomButton: { type: WL.Type.Object, default: null },
-    myTopButton: { type: WL.Type.Object, default: null }
+    _myHandedness: { type: WL.Type.Enum, values: ['left', 'right'], default: 'left' },
+    _mySelect: { type: WL.Type.Object, default: null },
+    _mySqueeze: { type: WL.Type.Object, default: null },
+    _myThumbstick: { type: WL.Type.Object, default: null },
+    _myBottomButton: { type: WL.Type.Object, default: null },
+    _myTopButton: { type: WL.Type.Object, default: null }
 }, {
     init: function () {
-        if (this.myHandedness == 0) {
+        if (this._myHandedness == 0) {
             this._myGamepad = null; //@EDIT get gamepad left here based on how you store it in your game
         } else {
             this._myGamepad = null; //@EDIT get gamepad right here based on how you store it in your game
@@ -21,46 +21,46 @@ WL.registerComponent('gamepad-animator', {
         this._myIsTouchedDiffuseButtonColor = null;
         this._myIsTouchedAmbientButtonColor = null;
 
-        this._mySelectMaterial = this.mySelect.getComponent("mesh").material.clone();
-        this.mySelect.getComponent("mesh").material = this._mySelectMaterial;
+        this._mySelectMaterial = this._mySelect.getComponent("mesh").material.clone();
+        this._mySelect.getComponent("mesh").material = this._mySelectMaterial;
         this._mySelectPosition = new Float32Array(3);
-        this.mySelect.getTranslationLocal(this._mySelectPosition);
+        this._mySelect.getTranslationLocal(this._mySelectPosition);
         if (this._myNormalDiffuseButtonColor) {
             this._mySelectMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
             this._mySelectMaterial.ambientColor = this._myNormalAmbientButtonColor;
         }
 
-        this._mySqueezeMaterial = this.mySqueeze.getComponent("mesh").material.clone();
-        this.mySqueeze.getComponent("mesh").material = this._mySqueezeMaterial;
+        this._mySqueezeMaterial = this._mySqueeze.getComponent("mesh").material.clone();
+        this._mySqueeze.getComponent("mesh").material = this._mySqueezeMaterial;
         this._mySqueezePosition = new Float32Array(3);
-        this.mySqueeze.getTranslationLocal(this._mySqueezePosition);
+        this._mySqueeze.getTranslationLocal(this._mySqueezePosition);
         if (this._myNormalDiffuseButtonColor) {
             this._mySqueezeMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
             this._mySqueezeMaterial.ambientColor = this._myNormalAmbientButtonColor;
         }
 
-        this._myThumbstickMaterial = this.myThumbstick.getComponent("mesh").material.clone();
-        this.myThumbstick.getComponent("mesh").material = this._myThumbstickMaterial;
+        this._myThumbstickMaterial = this._myThumbstick.getComponent("mesh").material.clone();
+        this._myThumbstick.getComponent("mesh").material = this._myThumbstickMaterial;
         this._myThumbstickPosition = new Float32Array(3);
-        this.myThumbstick.getTranslationLocal(this._myThumbstickPosition);
+        this._myThumbstick.getTranslationLocal(this._myThumbstickPosition);
         if (this._myNormalDiffuseButtonColor) {
             this._myThumbstickMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
             this._myThumbstickMaterial.ambientColor = this._myNormalAmbientButtonColor;
         }
 
-        this._myBottomButtonMaterial = this.myBottomButton.getComponent("mesh").material.clone();
-        this.myBottomButton.getComponent("mesh").material = this._myBottomButtonMaterial;
+        this._myBottomButtonMaterial = this._myBottomButton.getComponent("mesh").material.clone();
+        this._myBottomButton.getComponent("mesh").material = this._myBottomButtonMaterial;
         this._myBottomButtonPosition = new Float32Array(3);
-        this.myBottomButton.getTranslationLocal(this._myBottomButtonPosition);
+        this._myBottomButton.getTranslationLocal(this._myBottomButtonPosition);
         if (this._myNormalDiffuseButtonColor) {
             this._myBottomButtonMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
             this._myBottomButtonMaterial.ambientColor = this._myNormalAmbientButtonColor;
         }
 
-        this._myTopButtonMaterial = this.myTopButton.getComponent("mesh").material.clone();
-        this.myTopButton.getComponent("mesh").material = this._myTopButtonMaterial;
+        this._myTopButtonMaterial = this._myTopButton.getComponent("mesh").material.clone();
+        this._myTopButton.getComponent("mesh").material = this._myTopButtonMaterial;
         this._myTopButtonPosition = new Float32Array(3);
-        this.myTopButton.getTranslationLocal(this._myTopButtonPosition);
+        this._myTopButton.getTranslationLocal(this._myTopButtonPosition);
         if (this._myNormalDiffuseButtonColor) {
             this._myTopButtonMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
             this._myTopButtonMaterial.ambientColor = this._myNormalAmbientButtonColor;
@@ -99,7 +99,7 @@ WL.registerComponent('gamepad-animator', {
         //AXES CHANGED
         this._myGamepad.registerAxesEvent(PP.AxesEvent.AXES_CHANGED, this, this._axesValueChanged.bind(this));
 
-        this._myThumbstickInitialLocalForward = this._getLocalAxis(this.myThumbstick, [0, 0, 1]);
+        this._myThumbstickInitialLocalForward = this._getLocalAxis(this._myThumbstick, [0, 0, 1]);
         this._myThumbstickForward = [0, 0, 1];
         this._mySelectForward = [0, 0, 1];
 
@@ -116,24 +116,24 @@ WL.registerComponent('gamepad-animator', {
         //since thumbstick object rotate I need to specifically use its initial forward
         let tempVector = glMatrix.vec3.create();
         glMatrix.vec3.scale(tempVector, this._myThumbstickInitialLocalForward, 0.0015);
-        this.myThumbstick.translate(tempVector);
+        this._myThumbstick.translate(tempVector);
     },
     _thumbstickPressedEnd: function (buttonInfo, gamepad) {
         let tempVector = glMatrix.vec3.create();
         glMatrix.vec3.scale(tempVector, this._myThumbstickInitialLocalForward, -0.0015);
-        this.myThumbstick.translate(tempVector);
+        this._myThumbstick.translate(tempVector);
     },
     _bottomButtonPressedStart: function (buttonInfo, gamepad) {
-        this._translateLocalAxis(this.myBottomButton, [0, 0, 1], 0.002);
+        this._translateLocalAxis(this._myBottomButton, [0, 0, 1], 0.002);
     },
     _bottomButtonPressedEnd: function (buttonInfo, gamepad) {
-        this._translateLocalAxis(this.myBottomButton, [0, 0, 1], -0.002);
+        this._translateLocalAxis(this._myBottomButton, [0, 0, 1], -0.002);
     },
     _topButtonPressedStart: function (buttonInfo, gamepad) {
-        this._translateLocalAxis(this.myTopButton, [0, 0, 1], 0.002);
+        this._translateLocalAxis(this._myTopButton, [0, 0, 1], 0.002);
     },
     _topButtonPressedEnd: function (buttonInfo, gamepad) {
-        this._translateLocalAxis(this.myTopButton, [0, 0, 1], -0.002);
+        this._translateLocalAxis(this._myTopButton, [0, 0, 1], -0.002);
     },
     //TOUCHED
     _selectTouchedStart: function (buttonInfo, gamepad) {
@@ -198,34 +198,34 @@ WL.registerComponent('gamepad-animator', {
     },
     _selectValueChanged: function (buttonInfo, gamepad) {
         //first reset rotation to start position
-        this._copyAlignRotation(this.mySelect, this._mySelectForward, [0, 0, 1]);
+        this._copyAlignRotation(this._mySelect, this._mySelectForward, [0, 0, 1]);
 
         let angleToRotate = glMatrix.glMatrix.toRadian(15 * buttonInfo.myValue);
         let tiltDirection = [0, 0, 1];
         glMatrix.vec3.rotateX(tiltDirection, tiltDirection, [0, 0, 0], angleToRotate);
         glMatrix.vec3.normalize(tiltDirection, tiltDirection);
 
-        this._copyAlignRotation(this.mySelect, [0, 0, 1], tiltDirection);
+        this._copyAlignRotation(this._mySelect, [0, 0, 1], tiltDirection);
 
         this._mySelectForward = tiltDirection;
     },
     _squeezeValueChanged: function (buttonInfo, gamepad) {
-        this.mySqueeze.setTranslationLocal(this._mySqueezePosition);
+        this._mySqueeze.setTranslationLocal(this._mySqueezePosition);
         let translation = 0.0015;
-        if (this.myHandedness == 1) {
+        if (this._myHandedness == 1) {
             translation *= -1;
         }
-        this._translateLocalAxis(this.mySqueeze, [1, 0, 0], translation * buttonInfo.myValue);
+        this._translateLocalAxis(this._mySqueeze, [1, 0, 0], translation * buttonInfo.myValue);
     },
     _axesValueChanged: function (axesInfo, gamepad) {
         //first reset rotation to start position
-        this._copyAlignRotation(this.myThumbstick, this._myThumbstickForward, [0, 0, 1]);
+        this._copyAlignRotation(this._myThumbstick, this._myThumbstickForward, [0, 0, 1]);
 
         let tiltDirection = new Float32Array(3);
         glMatrix.vec3.add(tiltDirection, [0, 0, 1], [axesInfo.myAxes[0], -axesInfo.myAxes[1], 0.0]);
         glMatrix.vec3.normalize(tiltDirection, tiltDirection);
 
-        this._copyAlignRotation(this.myThumbstick, [0, 0, 1], tiltDirection);
+        this._copyAlignRotation(this._myThumbstick, [0, 0, 1], tiltDirection);
 
         this._myThumbstickForward = tiltDirection;
     },

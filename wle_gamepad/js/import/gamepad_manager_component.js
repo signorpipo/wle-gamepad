@@ -1,6 +1,6 @@
 /**
  * A quick and simple way to have the gamepads up and running
- * Add this manager to an object that will never available destroyed (like the Scene object)
+ * Add this manager to an object that will never available destroyed (like the Player object)
  * otherwise the gamepads will not be updated anymore
  */
 WL.registerComponent('gamepad-manager', {
