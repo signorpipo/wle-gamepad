@@ -1,0 +1,263 @@
+/**
+ * Animate the buttons of a gamepad, like pressing, thumbstick tilting and so on
+ */
+WL.registerComponent('gamepad_animator', {
+    myHandedness: { type: WL.Type.Enum, values: ['left', 'right'], default: 'left' },
+    mySelect: { type: WL.Type.Object, default: null },
+    mySqueeze: { type: WL.Type.Object, default: null },
+    myThumbstick: { type: WL.Type.Object, default: null },
+    myBottomButton: { type: WL.Type.Object, default: null },
+    myTopButton: { type: WL.Type.Object, default: null }
+}, {
+    init: function () {
+        if (this.myHandedness == 0) {
+            this._myGamepad = null; //@EDIT get gamepad left here based on how you store it in your game
+        } else {
+            this._myGamepad = null; //@EDIT get gamepad right here based on how you store it in your game
+        }
+
+        this._myNormalDiffuseButtonColor = null; //@EDIT with the color you want, or leave null to keep the material color, set all color variables or none
+        this._myNormalAmbientButtonColor = null; // set them like this [x/255, y/255, z/255, w/255]
+        this._myTouchedDiffuseButtonColor = null;
+        this._myTouchedAmbientButtonColor = null;
+
+        this._mySelectMaterial = this.mySelect.getComponent("mesh").material.clone();
+        this.mySelect.getComponent("mesh").material = this._mySelectMaterial;
+        this._mySelectPosition = new Float32Array(3);
+        this.mySelect.getTranslationLocal(this._mySelectPosition);
+        if (this._myNormalDiffuseButtonColor) {
+            this._mySelectMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
+            this._mySelectMaterial.ambientColor = this._myNormalAmbientButtonColor;
+        }
+
+        this._mySqueezeMaterial = this.mySqueeze.getComponent("mesh").material.clone();
+        this.mySqueeze.getComponent("mesh").material = this._mySqueezeMaterial;
+        this._mySqueezePosition = new Float32Array(3);
+        this.mySqueeze.getTranslationLocal(this._mySqueezePosition);
+        if (this._myNormalDiffuseButtonColor) {
+            this._mySqueezeMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
+            this._mySqueezeMaterial.ambientColor = this._myNormalAmbientButtonColor;
+        }
+
+        this._myThumbstickMaterial = this.myThumbstick.getComponent("mesh").material.clone();
+        this.myThumbstick.getComponent("mesh").material = this._myThumbstickMaterial;
+        this._myThumbstickPosition = new Float32Array(3);
+        this.myThumbstick.getTranslationLocal(this._myThumbstickPosition);
+        if (this._myNormalDiffuseButtonColor) {
+            this._myThumbstickMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
+            this._myThumbstickMaterial.ambientColor = this._myNormalAmbientButtonColor;
+        }
+
+        this._myBottomButtonMaterial = this.myBottomButton.getComponent("mesh").material.clone();
+        this.myBottomButton.getComponent("mesh").material = this._myBottomButtonMaterial;
+        this._myBottomButtonPosition = new Float32Array(3);
+        this.myBottomButton.getTranslationLocal(this._myBottomButtonPosition);
+        if (this._myNormalDiffuseButtonColor) {
+            this._myBottomButtonMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
+            this._myBottomButtonMaterial.ambientColor = this._myNormalAmbientButtonColor;
+        }
+
+        this._myTopButtonMaterial = this.myTopButton.getComponent("mesh").material.clone();
+        this.myTopButton.getComponent("mesh").material = this._myTopButtonMaterial;
+        this._myTopButtonPosition = new Float32Array(3);
+        this.myTopButton.getTranslationLocal(this._myTopButtonPosition);
+        if (this._myNormalDiffuseButtonColor) {
+            this._myTopButtonMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
+            this._myTopButtonMaterial.ambientColor = this._myNormalAmbientButtonColor;
+        }
+
+        //PRESSED
+        this._myGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.PRESSED_START, this, this._thumbstickPressedStart.bind(this));
+        this._myGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.PRESSED_END, this, this._thumbstickPressedEnd.bind(this));
+
+        this._myGamepad.registerButtonEvent(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.PRESSED_START, this, this._bottomButtonPressedStart.bind(this));
+        this._myGamepad.registerButtonEvent(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.PRESSED_END, this, this._bottomButtonPressedEnd.bind(this));
+
+        this._myGamepad.registerButtonEvent(PP.ButtonType.TOP_BUTTON, PP.ButtonEvent.PRESSED_START, this, this._topButtonPressedStart.bind(this));
+        this._myGamepad.registerButtonEvent(PP.ButtonType.TOP_BUTTON, PP.ButtonEvent.PRESSED_END, this, this._topButtonPressedEnd.bind(this));
+
+        //TOUCHED
+        this._myGamepad.registerButtonEvent(PP.ButtonType.SELECT, PP.ButtonEvent.TOUCHED_START, this, this._selectTouchedStart.bind(this));
+        this._myGamepad.registerButtonEvent(PP.ButtonType.SELECT, PP.ButtonEvent.TOUCHED_END, this, this._selectTouchedEnd.bind(this));
+
+        this._myGamepad.registerButtonEvent(PP.ButtonType.SQUEEZE, PP.ButtonEvent.TOUCHED_START, this, this._squeezeTouchedStart.bind(this));
+        this._myGamepad.registerButtonEvent(PP.ButtonType.SQUEEZE, PP.ButtonEvent.TOUCHED_END, this, this._squeezeTouchedEnd.bind(this));
+
+        this._myGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.TOUCHED_START, this, this._thumbstickTouchedStart.bind(this));
+        this._myGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.TOUCHED_END, this, this._thumbstickTouchedEnd.bind(this));
+
+        this._myGamepad.registerButtonEvent(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.TOUCHED_START, this, this._bottomButtonTouchedStart.bind(this));
+        this._myGamepad.registerButtonEvent(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.TOUCHED_END, this, this._bottomButtonTouchedEnd.bind(this));
+
+        this._myGamepad.registerButtonEvent(PP.ButtonType.TOP_BUTTON, PP.ButtonEvent.TOUCHED_START, this, this._topButtonTouchedStart.bind(this));
+        this._myGamepad.registerButtonEvent(PP.ButtonType.TOP_BUTTON, PP.ButtonEvent.TOUCHED_END, this, this._topButtonTouchedEnd.bind(this));
+
+        //VALUE CHANGED
+        this._myGamepad.registerButtonEvent(PP.ButtonType.SQUEEZE, PP.ButtonEvent.VALUE_CHANGED, this, this._squeezeValueChanged.bind(this));
+        this._myGamepad.registerButtonEvent(PP.ButtonType.SELECT, PP.ButtonEvent.VALUE_CHANGED, this, this._selectValueChanged.bind(this));
+
+        //AXES CHANGED
+        this._myGamepad.registerAxesEvent(PP.AxesEvent.AXES_CHANGED, this, this._axesValueChanged.bind(this));
+
+        this._myThumbstickInitialLocalForward = this._getLocalAxis(this._myThumbstick, [0, 0, 1]);
+        this._myThumbstickForward = [0, 0, 1];
+        this._mySelectForward = [0, 0, 1];
+
+        this.object.scale([0, 0, 0]);
+        this._myMeshEnabled = false;
+
+    },
+    start: function () {
+    },
+    update: function (dt) {
+        this._enableMeshInSession();
+    },
+    _thumbStickPressedStart: function (buttonInfo, gamepad) {
+        //since thumbstick object rotate I need to specifically use its initial forward
+        let tempVector = glMatrix.vec3.create();
+        glMatrix.vec3.scale(tempVector, this._myThumbstickInitialLocalForward, 0.0015);
+        this.myThumbstick.translate(tempVector);
+    },
+    _thumbStickPressedEnd: function (buttonInfo, gamepad) {
+        let tempVector = glMatrix.vec3.create();
+        glMatrix.vec3.scale(tempVector, this._myThumbstickInitialLocalForward, -0.0015);
+        this.myThumbstick.translate(tempVector);
+    },
+    _bottomButtonPressedStart: function (buttonInfo, gamepad) {
+        this._translateLocalAxis(this._myBottomButton, [0, 0, 1], 0.002);
+    },
+    _bottomButtonPressedEnd: function (buttonInfo, gamepad) {
+        this._translateLocalAxis(this._myBottomButton, [0, 0, 1], -0.002);
+    },
+    _topButtonPressedStart: function (buttonInfo, gamepad) {
+        this._translateLocalAxis(this._myTopButton, [0, 0, 1], 0.002);
+    },
+    _topButtonPressedEnd: function (buttonInfo, gamepad) {
+        this._translateLocalAxis(this._myTopButton, [0, 0, 1], -0.002);
+    },
+    //TOUCHED
+    _selectTouchedStart: function (buttonInfo, gamepad) {
+        if (this._myNormalDiffuseButtonColor) {
+            this._mySelectMaterial.diffuseColor = this._myTouchedDiffuseButtonColor;
+            this._mySelectMaterial.ambientColor = this._myTouchedAmbientButtonColor;
+        }
+    },
+    _selectTouchedEnd: function (buttonInfo, gamepad) {
+        if (this._myNormalDiffuseButtonColor) {
+            this._mySelectMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
+            this._mySelectMaterial.ambientColor = this._myNormalAmbientButtonColor;
+        }
+    },
+    _squeezeTouchedStart: function (buttonInfo, gamepad) {
+        if (this._myNormalDiffuseButtonColor) {
+            this._mySqueezeMaterial.diffuseColor = this._myTouchedDiffuseButtonColor;
+            this._mySqueezeMaterial.ambientColor = this._myTouchedAmbientButtonColor;
+        }
+    },
+    _squeezeTouchedEnd: function (buttonInfo, gamepad) {
+        if (this._myNormalDiffuseButtonColor) {
+            this._mySqueezeMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
+            this._mySqueezeMaterial.ambientColor = this._myNormalAmbientButtonColor;
+        }
+    },
+    _thumbStickTouchedStart: function (buttonInfo, gamepad) {
+        if (this._myNormalDiffuseButtonColor) {
+            this._myThumbstickMaterial.diffuseColor = this._myTouchedDiffuseButtonColor;
+            this._myThumbstickMaterial.ambientColor = this._myTouchedAmbientButtonColor;
+        }
+    },
+    _thumbStickTouchedEnd: function (buttonInfo, gamepad) {
+        if (this._myNormalDiffuseButtonColor) {
+            this._myThumbstickMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
+            this._myThumbstickMaterial.ambientColor = this._myNormalAmbientButtonColor;
+        }
+    },
+    _bottomButtonTouchedStart: function (buttonInfo, gamepad) {
+        if (this._myNormalDiffuseButtonColor) {
+            this._myBottomButtonMaterial.diffuseColor = this._myTouchedDiffuseButtonColor;
+            this._myBottomButtonMaterial.ambientColor = this._myTouchedAmbientButtonColor;
+        }
+    },
+    _bottomButtonTouchedEnd: function (buttonInfo, gamepad) {
+        if (this._myNormalDiffuseButtonColor) {
+            this._myBottomButtonMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
+            this._myBottomButtonMaterial.ambientColor = this._myNormalAmbientButtonColor;
+        }
+    },
+    _topButtonTouchedStart: function (buttonInfo, gamepad) {
+        if (this._myNormalDiffuseButtonColor) {
+            this._myTopButtonMaterial.diffuseColor = this._myTouchedDiffuseButtonColor;
+            this._myTopButtonMaterial.ambientColor = this._myTouchedAmbientButtonColor;
+        }
+    },
+    _topButtonTouchedEnd: function (buttonInfo, gamepad) {
+        if (this._myNormalDiffuseButtonColor) {
+            this._myTopButtonMaterial.diffuseColor = this._myNormalDiffuseButtonColor;
+            this._myTopButtonMaterial.ambientColor = this._myNormalAmbientButtonColor;
+        }
+    },
+    _selectValueChanged: function (buttonInfo, gamepad) {
+        //first reset rotation to start position
+        this.copyAlignRotation(this._select, this._selectForward, [0, 0, 1]);
+
+        let angleToRotate = glMatrix.glMatrix.toRadian(15 * buttonInfo.myValue);
+        let tiltDirection = [0, 0, 1];
+        glMatrix.vec3.rotateX(tiltDirection, tiltDirection, [0, 0, 0], angleToRotate);
+        glMatrix.vec3.normalize(tiltDirection, tiltDirection);
+
+        this.copyAlignRotation(this._select, [0, 0, 1], tiltDirection);
+
+        this._selectForward = tiltDirection;
+    },
+    _squeezeValueChanged: function (buttonInfo, gamepad) {
+        this.mySqueeze.setTranslationLocal(this._mySqueezePosition);
+        let translation = 0.0015;
+        if (this.myHandedness == 1) {
+            translation *= -1;
+        }
+        this.translateLocalAxis(this.mySqueeze, [1, 0, 0], translation * buttonInfo.myValue);
+    },
+    _axesValueChanged: function (axesInfo, gamepad) {
+        //first reset rotation to start position
+        this._copyAlignRotation(this._myThumbstick, this._myThumbstickForward, [0, 0, 1]);
+
+        let tiltDirection = new Float32Array(3);
+        glMatrix.vec3.add(tiltDirection, [0, 0, 1], [axesInfo.myAxes[0], -axesInfo.myAxes[1], 0.0]);
+        glMatrix.vec3.normalize(tiltDirection, tiltDirection);
+
+        this._copyAlignRotation(this._myThumbstick, [0, 0, 1], tiltDirection);
+
+        this._myThumbstickForward = tiltDirection;
+    },
+    //Couldn't find a better name, basically find the rotation to align start axis to end, and apply that to object
+    _copyAlignRotation: function (object, startAxis, endAxis) {
+        let rotationAxis = new Float32Array(3);
+        glMatrix.vec3.cross(rotationAxis, startAxis, endAxis);
+        glMatrix.vec3.normalize(rotationAxis, rotationAxis);
+
+        let angleToRotate = glMatrix.vec3.angle(startAxis, endAxis);
+
+        if (angleToRotate > 0.0001) {
+            object.rotateAxisAngleRadObject(rotationAxis, angleToRotate);
+        }
+    },
+    _translateLocalAxis(object, axis, amount) {
+        let tempVector = this._getLocalAxis(object, axis);
+        glMatrix.vec3.scale(tempVector, tempVector, amount);
+        object.translate(tempVector);
+    },
+    _getLocalAxis(object, axis) {
+        let tempVector = glMatrix.vec3.create();
+        glMatrix.vec3.transformQuat(tempVector, axis, object.transformLocal);
+        glMatrix.vec3.normalize(tempVector, tempVector);
+        return tempVector;
+    },
+    _enableMeshInSession: function () {
+        if (!this._myMeshEnabled) {
+            if (WL.xrSession) {
+                this.object.resetScaling();
+                this._myMeshEnabled = true;
+            }
+        }
+    }
+});
