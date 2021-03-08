@@ -62,12 +62,15 @@ WL.registerComponent('left_gamepad_animator', {
         this.enableMeshInSession();
 
         //SELECT
-        let button = leftGamepad.getButtonInfo(PP.ButtonType.SELECT);
+        let button = LeftGamepad.getButtonInfo(PP.ButtonType.SELECT);
 
         {
             //first reset rotation to start position
             this.copyAlignRotation(this.select, this.selectForward, [0, 0, 1]);
 
+            if (button.myValue != 0) {
+                console.log(button.myValue);
+            }
             let angleToRotate = glMatrix.glMatrix.toRadian(15 * button.myValue);
             let tiltDirection = [0, 0, 1];
             glMatrix.vec3.rotateX(tiltDirection, tiltDirection, [0, 0, 0], angleToRotate);
@@ -78,7 +81,7 @@ WL.registerComponent('left_gamepad_animator', {
             this.selectForward = tiltDirection;
 
             if (button.myIsPressed) {
-                leftGamepad.stopPulse();
+                LeftGamepad.stopPulse();
             }
         }
 
@@ -93,7 +96,7 @@ WL.registerComponent('left_gamepad_animator', {
         this.selectValueText.text = button.myValue.toFixed(3);
 
         //SQUEEZE
-        button = leftGamepad.getButtonInfo(PP.ButtonType.SQUEEZE);
+        button = LeftGamepad.getButtonInfo(PP.ButtonType.SQUEEZE);
 
         this.squeeze.setTranslationLocal(this.squeezePosition);
         this.translateLocalAxis(this.squeeze, [1, 0, 0], 0.0015 * button.myValue);
@@ -109,7 +112,7 @@ WL.registerComponent('left_gamepad_animator', {
         this.squeezeValueText.text = button.myValue.toFixed(3);
 
         //THUMBSTICK
-        button = leftGamepad.getButtonInfo(PP.ButtonType.THUMBSTICK);
+        button = LeftGamepad.getButtonInfo(PP.ButtonType.THUMBSTICK);
 
         this.thumbstick.setTranslationLocal(this.thumbstickPosition);
         if (button.myIsPressed) {
@@ -131,7 +134,7 @@ WL.registerComponent('left_gamepad_animator', {
         this.updateThumbstickTilt();
 
         //BOTTOM BUTTON
-        button = leftGamepad.getButtonInfo(PP.ButtonType.BOTTOM_BUTTON);
+        button = LeftGamepad.getButtonInfo(PP.ButtonType.BOTTOM_BUTTON);
 
         this.bottomButton.setTranslationLocal(this.bottomButtonPosition);
 
@@ -148,7 +151,7 @@ WL.registerComponent('left_gamepad_animator', {
         }
 
         //TOP BUTTON
-        button = leftGamepad.getButtonInfo(PP.ButtonType.TOP_BUTTON);
+        button = LeftGamepad.getButtonInfo(PP.ButtonType.TOP_BUTTON);
 
         this.topButton.setTranslationLocal(this.topButtonPosition);
         if (button.myIsPressed) {
@@ -164,7 +167,7 @@ WL.registerComponent('left_gamepad_animator', {
         }
     },
     updateThumbstickValues: function () {
-        let axesInfo = leftGamepad.getAxesInfo();
+        let axesInfo = LeftGamepad.getAxesInfo();
         let text = "0.000";
         if (axesInfo.myAxes[0] >= 0.0) {
             text = "  ";
@@ -188,7 +191,7 @@ WL.registerComponent('left_gamepad_animator', {
 
     },
     updateThumbstickTilt: function () {
-        let axesInfo = leftGamepad.getAxesInfo();
+        let axesInfo = LeftGamepad.getAxesInfo();
 
         //first reset rotation to start position
         this.copyAlignRotation(this.thumbstick, this.thumbstickForward, [0, 0, 1]);
