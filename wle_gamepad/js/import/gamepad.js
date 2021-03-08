@@ -1,4 +1,6 @@
 //If you don't want the PP "namespace" just search and replace PP. with empty string
+//you must also add var in front of the enums (like var Handedness = {}) since now they are no longer child of PP
+//and also remove the class assignment to the same name (like ButtonInfo = class ButtonInfo{}) since now they can be global
 
 PP.Handedness =
 {
