@@ -1,2 +1,2 @@
-You can find a guide on how to import the gamepad.js class or the animated gamepads on the github page of the project:
+You can find a guide on how to import the gamepad.js class and the animated gamepads on the github page of the project:
 https://github.com/SignorPipo/wle_gamepad
