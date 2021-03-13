@@ -28,9 +28,9 @@ WL.registerComponent('add-rumble', {
                 }
 
                 if (handType.myHandedness == 0) {
-                    LeftGamepad.pulse(pulseIntensity, this.myDuration);
+                    PP.LeftGamepad.pulse(pulseIntensity, this.myDuration);
                 } else {
-                    RightGamepad.pulse(pulseIntensity, this.myDuration);
+                    PP.RightGamepad.pulse(pulseIntensity, this.myDuration);
                 }
             }
         }

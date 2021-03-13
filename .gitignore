@@ -2,3 +2,5 @@
 wle_gamepad/deploy/
 
 wle_gamepad/imgui.ini
+
+wle_gamepad/cache/
