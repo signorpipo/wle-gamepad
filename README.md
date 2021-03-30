@@ -11,10 +11,10 @@ To import `gamepad.js` you have to:
 - Import `gamepad.js` somewhere inside your `project` folder
 - Import the `pp` folder into your `project` folder, this folder contains the `pp.js` file with the `PP` namespace declaration in it
   - This folder should only contain this item
-- You must link this folder in the Java Script Sources list (under Project Settings) before any other folders that contain scripts that use the `PP` namespace
- - This is needed to make sure the `PP` namespace is created before it is used 
- - If you put it as first (after `/js/components/`) you should be safe
-- If you don't want to use the `PP` namespace just remove it from the `gamepad.js` script, in this case you won't need `pp.js`
+  - You must link this folder in the Java Script Sources list (under Project Settings) before any other folders that contain scripts that use the `PP` namespace
+  - This is needed to make sure the `PP` namespace is created before it is used 
+  - If you put it as first (after `/js/components/`) you should be safe
+  - If you don't want to use the `PP` namespace just remove it from the `gamepad.js` script, in this case you won't need `pp.js`
 
 To use `gamepad.js` you have to:
 - Instantiate the Gamepad class for both left and right controller
