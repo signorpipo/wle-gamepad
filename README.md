@@ -1,3 +1,7 @@
+<p align="center">
+<br>
+<img src="https://github.com/SignorPipo/wle_gamepad/blob/main/extra/showdonttell.gif">
+</p>
 
 ## Description
 A showcase of the `gamepad.js` utility for the Wonderland Engine that lets you easily retrieve controller button state, play a pulse effect, register to controller event and so on.
@@ -5,6 +9,8 @@ A showcase of the `gamepad.js` utility for the Wonderland Engine that lets you e
 Left gamepad and right gamepad in game are handled differently to showcase different ways to use `gamepad.js`:
   - Left is managed by polling the status of the gamepad
   - Right is managed by registering to gamepad events
+
+You can find a live version of the `gamepad.js` [here](https://elia-ducceschi.itch.io/gamepad-wonderland-engine).
 
 ## How to import and use gamepad.js
 To import `gamepad.js` you have to:
