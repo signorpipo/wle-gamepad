@@ -53,45 +53,45 @@ WL.registerComponent('right_gamepad_animator', {
         this.yValueText = this.yValue.getComponent("text");
 
         //PRESSED
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.SELECT, PP.ButtonEvent.PRESSED_START, this, this.selectPressedStart.bind(this));
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.SELECT, PP.ButtonEvent.PRESSED_END, this, this.selectPressedEnd.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.SELECT, PP.ButtonEvent.PRESS_START, this, this.selectPressedStart.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.SELECT, PP.ButtonEvent.PRESS_END, this, this.selectPressedEnd.bind(this));
 
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.SQUEEZE, PP.ButtonEvent.PRESSED_START, this, this.squeezePressedStart.bind(this));
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.SQUEEZE, PP.ButtonEvent.PRESSED_END, this, this.squeezePressedEnd.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.SQUEEZE, PP.ButtonEvent.PRESS_START, this, this.squeezePressedStart.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.SQUEEZE, PP.ButtonEvent.PRESS_END, this, this.squeezePressedEnd.bind(this));
 
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.PRESSED_START, this, this.thumbstickPressedStart.bind(this));
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.PRESSED_END, this, this.thumbstickPressedEnd.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.PRESS_START, this, this.thumbstickPressedStart.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.PRESS_END, this, this.thumbstickPressedEnd.bind(this));
 
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.PRESSED_START, this, this.bottomButtonPressedStart.bind(this));
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.PRESSED_END, this, this.bottomButtonPressedEnd.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.PRESS_START, this, this.bottomButtonPressedStart.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.PRESS_END, this, this.bottomButtonPressedEnd.bind(this));
 
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.TOP_BUTTON, PP.ButtonEvent.PRESSED_START, this, this.topButtonPressedStart.bind(this));
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.TOP_BUTTON, PP.ButtonEvent.PRESSED_END, this, this.topButtonPressedEnd.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.TOP_BUTTON, PP.ButtonEvent.PRESS_START, this, this.topButtonPressedStart.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.TOP_BUTTON, PP.ButtonEvent.PRESS_END, this, this.topButtonPressedEnd.bind(this));
 
         //TOUCHED
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.SELECT, PP.ButtonEvent.TOUCHED_START, this, this.selectTouchedStart.bind(this));
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.SELECT, PP.ButtonEvent.TOUCHED_END, this, this.selectTouchedEnd.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.SELECT, PP.ButtonEvent.TOUCH_START, this, this.selectTouchedStart.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.SELECT, PP.ButtonEvent.TOUCH_END, this, this.selectTouchedEnd.bind(this));
 
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.SQUEEZE, PP.ButtonEvent.TOUCHED_START, this, this.squeezeTouchedStart.bind(this));
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.SQUEEZE, PP.ButtonEvent.TOUCHED_END, this, this.squeezeTouchedEnd.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.SQUEEZE, PP.ButtonEvent.TOUCH_START, this, this.squeezeTouchedStart.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.SQUEEZE, PP.ButtonEvent.TOUCH_END, this, this.squeezeTouchedEnd.bind(this));
 
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.TOUCHED_START, this, this.thumbstickTouchedStart.bind(this));
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.TOUCHED_END, this, this.thumbstickTouchedEnd.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.TOUCH_START, this, this.thumbstickTouchedStart.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.THUMBSTICK, PP.ButtonEvent.TOUCH_END, this, this.thumbstickTouchedEnd.bind(this));
 
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.TOUCHED_START, this, this.bottomButtonTouchedStart.bind(this));
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.TOUCHED_END, this, this.bottomButtonTouchedEnd.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.TOUCH_START, this, this.bottomButtonTouchedStart.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.BOTTOM_BUTTON, PP.ButtonEvent.TOUCH_END, this, this.bottomButtonTouchedEnd.bind(this));
 
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.TOP_BUTTON, PP.ButtonEvent.TOUCHED_START, this, this.topButtonTouchedStart.bind(this));
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.TOP_BUTTON, PP.ButtonEvent.TOUCHED_END, this, this.topButtonTouchedEnd.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.TOP_BUTTON, PP.ButtonEvent.TOUCH_START, this, this.topButtonTouchedStart.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.TOP_BUTTON, PP.ButtonEvent.TOUCH_END, this, this.topButtonTouchedEnd.bind(this));
 
         //VALUE CHANGED
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.SQUEEZE, PP.ButtonEvent.VALUE_CHANGED, this, this.squeezeValueChanged.bind(this));
-        PP.RightGamepad.registerButtonEvent(PP.ButtonType.SELECT, PP.ButtonEvent.VALUE_CHANGED, this, this.selectValueChanged.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.SQUEEZE, PP.ButtonEvent.VALUE_CHANGED, this, this.squeezeValueChanged.bind(this));
+        PP.RightGamepad.registerButtonEventListener(PP.ButtonType.SELECT, PP.ButtonEvent.VALUE_CHANGED, this, this.selectValueChanged.bind(this));
 
         //AXES CHANGED
-        PP.RightGamepad.registerAxesEvent(PP.AxesEvent.X_CHANGED, this, this.xValueChanged.bind(this));
-        PP.RightGamepad.registerAxesEvent(PP.AxesEvent.Y_CHANGED, this, this.yValueChanged.bind(this));
-        PP.RightGamepad.registerAxesEvent(PP.AxesEvent.AXES_CHANGED, this, this.axesValueChanged.bind(this));
+        PP.RightGamepad.registerAxesEventListener(PP.AxesEvent.X_CHANGED, this, this.xValueChanged.bind(this));
+        PP.RightGamepad.registerAxesEventListener(PP.AxesEvent.Y_CHANGED, this, this.yValueChanged.bind(this));
+        PP.RightGamepad.registerAxesEventListener(PP.AxesEvent.AXES_CHANGED, this, this.axesValueChanged.bind(this));
 
         this.thumbstickInitialLocalForward = this.getLocalAxis(this.thumbstick, [0, 0, 1]);
         this.thumbstickForward = [0, 0, 1];

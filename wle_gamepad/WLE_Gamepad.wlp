@@ -442,7 +442,7 @@
                 2.980231839089242e-9,
                 2.3283064365386964e-9,
                 0.0,
-                -3.259629011154175e-9,
+                -3.2596290111541754e-9,
                 -0.005109270568937063,
                 -0.00859624333679676,
                 0.0,
@@ -544,7 +544,7 @@
                 2.980231839089242e-9,
                 1.862645149230957e-9,
                 0.0,
-                -3.259629011154175e-9,
+                -3.2596290111541754e-9,
                 -0.005109268706291914,
                 -0.00859624333679676,
                 0.0,
@@ -700,7 +700,7 @@
                 2.980231839089242e-9,
                 2.3283064365386964e-9,
                 0.0,
-                -3.259629011154175e-9,
+                -3.2596290111541754e-9,
                 -0.005109270568937063,
                 -0.00859624333679676,
                 0.0,
@@ -734,7 +734,7 @@
                 2.980231839089242e-9,
                 2.3283064365386964e-9,
                 0.0,
-                -3.259629011154175e-9,
+                -3.2596290111541754e-9,
                 -0.005109270568937063,
                 -0.00859624333679676,
                 0.0,
@@ -2525,13 +2525,15 @@
             "link": {
                 "name": "Left_Body<Left_Quest_Controller",
                 "file": "assets\\quest_controllers_credits_Jezza3D.glb"
-            }
+            },
+            "parent": "151"
         },
         "153": {
             "link": {
                 "name": "Left_Bottom_Button<Left_Quest_Controller",
                 "file": "assets\\quest_controllers_credits_Jezza3D.glb"
-            }
+            },
+            "parent": "151"
         },
         "154": {
             "link": {
@@ -2544,19 +2546,22 @@
                         "material": "135"
                     }
                 }
-            ]
+            ],
+            "parent": "151"
         },
         "155": {
             "link": {
                 "name": "Left_Select<Left_Quest_Controller",
                 "file": "assets\\quest_controllers_credits_Jezza3D.glb"
-            }
+            },
+            "parent": "151"
         },
         "156": {
             "link": {
                 "name": "Left_Squeeze<Left_Quest_Controller",
                 "file": "assets\\quest_controllers_credits_Jezza3D.glb"
-            }
+            },
+            "parent": "151"
         },
         "157": {
             "link": {
@@ -2580,7 +2585,8 @@
                 -0.0037004470359534027,
                 -0.03963407129049301,
                 1.0
-            ]
+            ],
+            "parent": "151"
         },
         "158": {
             "link": {
@@ -2604,7 +2610,8 @@
                 -0.006952547933906317,
                 -0.0371638722717762,
                 1.0
-            ]
+            ],
+            "parent": "151"
         },
         "159": {
             "link": {
@@ -2657,13 +2664,15 @@
             "link": {
                 "name": "Right_Body<Right_Quest_Controller",
                 "file": "assets\\quest_controllers_credits_Jezza3D.glb"
-            }
+            },
+            "parent": "159"
         },
         "161": {
             "link": {
                 "name": "Right_Bottom_Button<Right_Quest_Controller",
                 "file": "assets\\quest_controllers_credits_Jezza3D.glb"
-            }
+            },
+            "parent": "159"
         },
         "162": {
             "link": {
@@ -2676,31 +2685,36 @@
                         "material": "135"
                     }
                 }
-            ]
+            ],
+            "parent": "159"
         },
         "163": {
             "link": {
                 "name": "Right_Select<Right_Quest_Controller",
                 "file": "assets\\quest_controllers_credits_Jezza3D.glb"
-            }
+            },
+            "parent": "159"
         },
         "164": {
             "link": {
                 "name": "Right_Squeeze<Right_Quest_Controller",
                 "file": "assets\\quest_controllers_credits_Jezza3D.glb"
-            }
+            },
+            "parent": "159"
         },
         "165": {
             "link": {
                 "name": "Right_Thumbstick<Right_Quest_Controller",
                 "file": "assets\\quest_controllers_credits_Jezza3D.glb"
-            }
+            },
+            "parent": "159"
         },
         "166": {
             "link": {
                 "name": "Right_Top_Button<Right_Quest_Controller",
                 "file": "assets\\quest_controllers_credits_Jezza3D.glb"
-            }
+            },
+            "parent": "159"
         },
         "167": {
             "name": "Squeeze_Widget",
@@ -3508,7 +3522,14 @@
             "name": "DefaultFont"
         }
     },
-    "images": {},
+    "images": {
+        "f0": {
+            "link": {
+                "name": "DefaultFontImage",
+                "file": "default"
+            }
+        }
+    },
     "materials": {
         "DefaultFontMaterial": {
             "link": {
@@ -3916,11 +3937,11 @@
     },
     "settings": {
         "project": {
-            "name": "WLE_Gamepad",
+            "name": "wle_gamepad",
             "version": [
                 0,
                 8,
-                1
+                4
             ]
         },
         "vr": {
@@ -3931,8 +3952,8 @@
             "sourcePaths": [
                 "/js/components/",
                 "js/pp",
-                "js/import",
-                "js/misc"
+                "js/cauldron",
+                "js/pp/gamepad"
             ]
         },
         "rendering": {
