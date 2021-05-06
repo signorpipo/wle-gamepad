@@ -51,5 +51,8 @@ If you want to import the gamepad models with the animation of the buttons you h
   - Specify the handedness
   - Fill the gamepad-animator component with the objects from the imported controller model
 
+## License
+You are free to use this in your projects, just remember to credit me somewhere!
+
 ## Credits
 Oculus Quest Controller Models by Jezza3D on Sketchfab with small adjustments made by me.
